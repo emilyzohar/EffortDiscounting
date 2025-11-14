@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="experiment-container">
+        
+        <!---- Allocation-slider shown after SID entry -->
+        <div id="sliderContainer" class="slider-container" style="display:none;">
+            <p>
+                Please decide whether you'd like to complete a greater proportion of trials for yourself or for the charity you chose
+            </p>
+
+            <input  type="range"
+                    id="allocationSlider"
+                    min="25" max="75" step="5" value="50">
+
+            <div class="slider-labels">
+                <span>More&nbsp;for&nbsp;me</span>
+                <span>50 / 50</span>
+                <span>More&nbsp;for&nbsp;charity</span>
+            </div>
+
+            <button id="sliderConfirm" class="box">Confirm</button>
+        </div>
+        <!---- Allocation-slider shown after SID entry -->
+
+
+        <div id="receiver" class="receiver"></div> <!-- Receiver displayed here -->
+        <div id="additionValueEl"></div> <!-- Addition value displayed here -->
+        
+        <div class="choice-container">
+            <div id="easy" class="box">
+                <div>+0</div>
+                <div>1 credit</div>
+            </div>
+            <div id="difficult" class="box">
+                <div id="difficult-addition"></div>
+                <div id="difficult-credits"></div>
+            </div>
+        </div>
+    
+        <div id="mathTask" class="math-task"></div> <!-- Numbers displayed here -->
+        <div id="answers" class="answers">
+            <div id="correctAnswer" class="answer"></div>
+            <div id="incorrectAnswer" class="answer"></div>
+        </div>
+        
+        <div id="feedback" class="feedback"></div>
+        <div id="fixationCross" style="display: none; font-size: 35px; text-align: center;">+</div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

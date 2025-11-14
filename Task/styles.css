@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.experiment-container {
+    text-align: center;
+}
+
+.receiver {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.choice-container, .answers {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.box {
+    padding: 20px;
+    border: 1px solid #333;
+    flex: 1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.box:hover {
+    background-color: #ddd;
+}
+
+.math-task {
+    font-size: 32px;
+    margin: 20px 0;
+    display: none;
+    height: 30px;
+    line-height: 30px;
+    opacity: 0; 
+    transition: opacity 0s linear;
+}
+
+.answers {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 450px; 
+}
+
+.answers .answer {
+    padding: 20px;
+    border: 1px solid #333;
+    flex: 1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 10px;  /* You can adjust this as needed */
+}
+
+.answers .answer:hover {
+    background-color: #ddd;
+}
+
+
+
+.feedback {
+    display: none;
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 50px; 
+}
+
+
+#additionValueEl {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+
+
+.slider-container { width: 420px; margin: 0 auto 40px; text-align: center; }
+
+input[type=range] { width: 100%; }
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: .9rem;
+    margin-top: 6px;
+    color: #555;
+}
+
+/* Keeps everything else from intercepting clicks while the slider is open */
+.blur-lock{
+    pointer-events:none;   /* ← back ON */
+    filter:blur(1px);
+}
+
+
+/* Make sure the slider sits on top of everything */
+.slider-container{
+    position:fixed;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    z-index:1000;         /* above the overlay */
+    background:#f3f4f6;
+    padding:20px 30px;
+    border-radius:8px;
+    box-shadow:0 0 8px rgba(0,0,0,.2);
+}
