@@ -728,34 +728,9 @@ function endExperiment() {
 
     const timestamp2 = new Date();
 
-    container.innerHTML = `
-        <div class="donation-screen" style="
-            max-width:500px;margin:40px auto;text-align:center;
-            background:#fff;padding:30px;border-radius:10px;
-            box-shadow:0 4px 12px rgba(0,0,0,.1);">
-            <h2 style="margin-top:0;">Congratulations!</h2>
-            <p style="font-size:1.1rem;">
-                You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
-            </p>
-            <p>Would you like to donate any of these to charity?</p>
-            <input type="number" id="donationInput"
-                   min="0" max="${creditsSelf}" value="0"
-                   style="padding:6px 10px;width:120px;font-size:1rem;">
-            <br>
-            <button id="donationConfirm" class="box"
-                    style="margin-top:20px;">Confirm donation</button>
-        </div>
-    `;
+    showKeyScreen();
 
-    document.getElementById('donationConfirm').onclick = () => {
-        const attempted = parseInt(document.getElementById('donationInput').value, 10) || 0;
-        attemptedDonation = attempted;
-
-        donatedTickets   = Math.max(0, Math.min(attempted, creditsSelf));
-        creditsSelf     -= donatedTickets;
-        creditsCharity  += donatedTickets;
-        showKeyScreen(); // proceed to final screen & CSV
-    };
+    
 
     function showKeyScreen() {
     const t2 = new Date();
