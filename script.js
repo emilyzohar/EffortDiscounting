@@ -9,6 +9,11 @@ const correctAnswerEl = document.getElementById('correctAnswer');
 const incorrectAnswerEl = document.getElementById('incorrectAnswer');
 const feedbackEl = document.getElementById('feedback');
 const fixationCrossEl = document.getElementById('fixationCross');
+const introScreen     = document.getElementById('introScreen');
+const introText       = document.getElementById('introText');
+const startPracticeBtn = document.getElementById('startPracticeBtn');
+const taskUI          = document.getElementById('taskUI');
+
 
 let selectedAllocation = 0;
 let currentAddition = 0;
@@ -43,7 +48,6 @@ let charityTrialPreference = 0;
 const receivers = ['Charity', 'Self']; //  For testing...
 const additions = [1, 3, 7]; // , 3, 7
 const credits = [2, 4, 8]; //, 4, 8
-let participantSID;
 
 /* ───────────────── Allocation control ───────────────── */
 let allocationPercentage = 50;          // 25, 50, or 75
@@ -51,14 +55,81 @@ let impactedReceiver   = 'Both';        // 'Self', 'Charity', or 'Both'
 let roundAssignments   = [];            // e.g., ['custom','fixed', ...] length = 4
 
 
-function start() {
-    participantSID = prompt("Please enter your Connect ID:", "");
-    console.log("SID:", participantSID);
-    // showAllocationSlider();
+let participantSID = null;
 
-    buildTrialList();      
-    displayNextTrial();
+function getUrlParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
 }
+
+function initParticipant() {
+  const sidFromUrl = getUrlParam('sid');  // e.g., ?sid=ABC123 in the URL
+  if (sidFromUrl && sidFromUrl.trim() !== '') {
+    participantSID = sidFromUrl.trim();
+  } else {
+    participantSID = prompt("Please enter your Connect ID:", "");
+  }
+  console.log("SID:", participantSID);
+}
+
+let phase = 'practice';   // 'practice' or 'main'
+
+function start() {
+    initParticipant();
+    showIntroScreen();    // new function below
+}
+
+function getIntroMessage() {
+  // Optional URL param: ?msg=Your+custom+text+here
+  const msgFromUrl = getUrlParam('msg');
+  if (msgFromUrl && msgFromUrl.trim() !== '') {
+    return decodeURIComponent(msgFromUrl);
+  }
+
+  // Or use a condition param if you want different scripts per condition:
+  const cond = getUrlParam('cond');  // e.g., ?cond=1
+  if (cond === '1') {
+    return "When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations. You might notice a sense of challenge, a boost in focus, or moments of frustration, fatigue, stress, or even irritation. These reactions can feel intense, but they’re also signs that you’re actively moving toward your goal. They show that your mind and body are engaged and using their resources to help you perform well. Think of it like the body’s “fight-or-flight” response: when something matters and requires effort, your system shifts into a more alert, energized state. High-effort activities work the same way. Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom–a shift into deeper engagement. Feelings like stress, frustration, or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing. Sometimes we misinterpret these sensations as evidence that we don’t have the skills or that we’re on the brink of failure. In reality, people can experience these feelings even when they have more than enough ability to succeed. As you move into the next task, we encourage you to treat any effort-related sensations as useful signals. They’re reminders that what you’re doing matters, that you’re investing yourself, and that you’re pushing in a meaningful direction. These sensations are part of your body and mind preparing you to meet the task’s demands. You don’t need to get rid of or ignore the feelings that come with high effort. Yes, effort can feel tiring or uncomfortable at times—but those feelings are simply part of doing something that requires focus and commitment. Instead of viewing them as obstacles, try to see them as evidence that you’re engaged, that you’re challenging yourself, and that you’re making progress. As you begin the next task, keep in mind that the feelings that come with effort are there to support you. They’re part of how your body and mind help you rise to a challenge.";
+  } else if (cond === '2') {
+    return "You’ll see number sequences and choose between easy and difficult versions of the task.";
+  }
+
+  // Default text if nothing in URL
+  return "You’ll now complete a short practice version of the task to get familiar with it. After practice, the real trials will begin.";
+}
+
+
+
+function showIntroScreen() {
+  introText.textContent = getIntroMessage();
+  introScreen.style.display = 'block';
+  taskUI.style.display      = 'none';
+
+  startPracticeBtn.onclick = () => {
+    introScreen.style.display = 'none';
+    taskUI.style.display      = 'block';
+    phase = 'practice';
+    buildPracticeTrialList();
+    displayNextTrial();
+  };
+}
+
+let trialListPractice  = [];
+let trialIndexPractice = 0;
+
+function buildPracticeTrialList() {
+  trialListPractice  = [];
+  trialIndexPractice = 0;
+
+  // Example: 4 simple practice trials
+  trialListPractice.push({ receiver: 'Practice', addition: 1, credit: 2 });
+  trialListPractice.push({ receiver: 'Practice', addition: 3, credit: 2 });
+  trialListPractice.push({ receiver: 'Practice', addition: 1, credit: 4 });
+  trialList.push({ receiver: 'Practice', addition: 3, credit: 4 });
+
+  shuffleArray(trialListPractice);
+}
+
 
 
 function showAllocationSlider(){
@@ -105,7 +176,7 @@ function showAllocationSlider(){
         expWrap.classList.remove('blur-lock');
         container.style.display = 'none';
 
-        buildTrialList();       
+        buildMainTrialList();       
         displayNextTrial();      // start first bucket
     };
 }
@@ -239,7 +310,7 @@ let trialIndex = 0;
 
 const REPS_PER_ROUND = 1;   // how many times to repeat each (addition, credit) combo
 
-function buildTrialList () {
+function buildMainTrialList () {
     trialList  = [];
     trialIndex = 0;
 
@@ -459,14 +530,16 @@ function checkAnswer(isCorrect) {
     });
     timedOut = false;
 
-    const interimTimestamp = new Date();
-    generateCSV(
-      trialResults,
-      participantUniqueKey,
-      participantSID,
-      timestamp1,
-      interimTimestamp
-    );
+    if (phase === 'main') {
+  const interimTimestamp = new Date();
+  generateCSV(
+    trialResults,
+    participantUniqueKey,
+    participantSID,
+    timestamp1,
+    interimTimestamp
+  );
+}
 
     // ── short ISI, then next trial ──────────────────────────
     setTimeout(() => {
@@ -594,8 +667,45 @@ const participantUniqueKey = generateUniqueKey();
 
 function endExperiment() {
 
-    const timestamp2 = new Date();
     const container  = document.querySelector('.experiment-container');
+
+    if (phase === 'practice') {
+        // PRACTICE END SCREEN
+        container.innerHTML = `
+            <div style="
+                max-width:500px;margin:40px auto;text-align:center;
+                background:#fff;padding:30px;border-radius:10px;
+                box-shadow:0 4px 12px rgba(0,0,0,.1);">
+                <h2>Practice complete</h2>
+                <p>You’ll now begin the main task. Your choices from now on will be recorded.</p>
+                <button id="startRealBtn" class="box">Start main task</button>
+            </div>
+        `;
+
+        document.getElementById('startRealBtn').onclick = () => {
+            phase = 'main';
+            timestamp1   = new Date();  // reset start time for real task
+            trialResults = [];          // clear out practice data
+            container.innerHTML = '';   // wipe this screen
+
+            // restore task UI
+            container.appendChild(introScreen); // if needed
+            container.appendChild(taskUI);
+            introScreen.style.display = 'none';
+            taskUI.style.display      = 'block';
+
+            buildMainTrialList();      // <-- this is your existing design
+            displayNextTrial();
+        };
+
+        return; // stop here; don't show donation/key for practice
+    }
+
+    // ───────────────────────────
+    // MAIN TASK END (your old code)
+    // ───────────────────────────
+
+    const timestamp2 = new Date();
 
     container.innerHTML = `
         <div class="donation-screen" style="
@@ -606,15 +716,23 @@ function endExperiment() {
             <p style="font-size:1.1rem;">
                 You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
             </p>
+            <p>Would you like to donate any of these to charity?</p>
+            <input type="number" id="donationInput"
+                   min="0" max="${creditsSelf}" value="0"
+                   style="padding:6px 10px;width:120px;font-size:1rem;">
             <br>
             <button id="donationConfirm" class="box"
-                    style="margin-top:20px;">Next</button>
+                    style="margin-top:20px;">Confirm donation</button>
         </div>
     `;
 
     document.getElementById('donationConfirm').onclick = () => {
-      
-       
+        const attempted = parseInt(document.getElementById('donationInput').value, 10) || 0;
+        attemptedDonation = attempted;
+
+        donatedTickets   = Math.max(0, Math.min(attempted, creditsSelf));
+        creditsSelf     -= donatedTickets;
+        creditsCharity  += donatedTickets;
         showKeyScreen(); // proceed to final screen & CSV
     };
 
@@ -640,9 +758,11 @@ function endExperiment() {
         `;
         document.body.appendChild(sc);
 
+        // Only now do we store the REAL data:
         generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, t2);
     }
 }
+
 
 
 
