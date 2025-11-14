@@ -606,13 +606,9 @@ function endExperiment() {
             <p style="font-size:1.1rem;">
                 You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
             </p>
-            <p>Would you like to donate any of these to charity?</p>
-            <input type="number" id="donationInput"
-                   min="0" max="${creditsSelf}" value="0"
-                   style="padding:6px 10px;width:120px;font-size:1rem;">
             <br>
             <button id="donationConfirm" class="box"
-                    style="margin-top:20px;">Confirm donation</button>
+                    style="margin-top:20px;">Next</button>
         </div>
     `;
 
