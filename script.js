@@ -105,7 +105,7 @@ function showInstructionsScreen() {
         // Build and start practice trials
         phase = 'practice';
         buildPracticeTrialList();   // you already defined this
-        displayNextTrialPractice();
+        displayNextTrial();
     };
 }
 
@@ -144,21 +144,21 @@ function showIntroScreen() {
   };
 }
 
-let trialListPractice  = [];
-let trialIndexPractice = 0;
+let trialList  = [];
+let trialIndex = 0;
 
 function buildPracticeTrialList() {
-  trialListPractice  = [];
-  trialIndexPractice = 0;
+  trialList  = [];
+  trialIndex = 0;
 
-  // Example: 4 simple practice trials
-  trialListPractice.push({ receiver: 'Practice', addition: 1, credit: 2 });
-  trialListPractice.push({ receiver: 'Practice', addition: 3, credit: 2 });
-  trialListPractice.push({ receiver: 'Practice', addition: 1, credit: 4 });
-  trialListPractice.push({ receiver: 'Practice', addition: 3, credit: 4 });
+  trialList.push({ receiver: 'Practice', addition: 1, credit: 2 });
+  trialList.push({ receiver: 'Practice', addition: 3, credit: 2 });
+  trialList.push({ receiver: 'Practice', addition: 1, credit: 4 });
+  trialList.push({ receiver: 'Practice', addition: 3, credit: 4 });
 
-  shuffleArray(trialListPractice);
+  shuffleArray(trialList);
 }
+
 
 
 
@@ -321,46 +321,6 @@ function displayNextTrial(){
     };
 }
 
-function displayNextTrialPractice(){
-
-    if (trialIndex >= trialListPractice.length){
-        endExperiment();
-        return;
-    }
-
-    trialCounter++;
-    const trial = trialListPractice[trialIndex];
-    console.log(`🧩  Trial ${trialCounter}`, trial);
-
-    startTime    = Date.now();
-    currentTrial = { ...trial, trialNumber: trialCounter };
-
-    // Use receiverEl just as an instruction line if you want
-    receiverEl.textContent   = "Choose a task:";
-    receiverEl.style.display = 'block';
-
-    difficultAdditionEl.textContent = '+' + trial.addition;
-    difficultCreditsEl.textContent  = trial.credit + ' credits';
-
-    chosenAddition = trial.addition;
-    chosenCredits  = trial.credit;
-
-    easyEl.style.display      = 'block';
-    difficultEl.style.display = 'block';
-
-    easyEl.onclick = () => {
-        decisionTime      = Date.now() - startTime;
-        participantChoice = 'easy';
-        currentAddition   = 0;
-        proceedToMathTask();
-    };
-    difficultEl.onclick = () => {
-        decisionTime      = Date.now() - startTime;
-        participantChoice = 'difficult';
-        currentAddition   = chosenAddition;
-        proceedToMathTask();
-    };
-}
 
 
 function proceedToNextTrial(){
@@ -375,8 +335,7 @@ function proceedToNextTrial(){
 
 
 
-let trialList  = [];
-let trialIndex = 0;
+
 
 const REPS_PER_ROUND = 1;   // how many times to repeat each (addition, credit) combo
 
