@@ -5,7 +5,7 @@ exports.handler = async (event, context) => {
     accessKeyId: process.env.key_id,
     secretAccessKey: process.env.secret_key,
   });
-//+ANYODpj1X4+q+sE02A7eeTiOUfK33v8RpZX/gUb
+
   const csvContent = event.body; // CSV content from the client
 
   // Generate a timestamp to include in the filename
