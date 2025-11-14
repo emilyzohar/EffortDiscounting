@@ -41,8 +41,8 @@ let charityTrialPreference = 0;
 
 
 const receivers = ['Charity', 'Self']; //  For testing...
-const additions = [1]; // , 3, 7
-const credits = [2]; //, 4, 8
+const additions = [1, 3, 7]; // , 3, 7
+const credits = [2, 4, 8]; //, 4, 8
 let participantSID;
 
 /* ───────────────── Allocation control ───────────────── */
@@ -54,7 +54,10 @@ let roundAssignments   = [];            // e.g., ['custom','fixed', ...] length�
 function start() {
     participantSID = prompt("Please enter your Connect ID:", "");
     console.log("SID:", participantSID);
-    showAllocationSlider();         
+    // showAllocationSlider();
+
+    buildTrialList();      
+    displayNextTrial();
 }
 
 
@@ -184,18 +187,18 @@ function displayNextTrial(){
     }
 
     trialCounter++;
-    const trial = trialList[trialIndex];   // do NOT pop – we might log later
+    const trial = trialList[trialIndex];
     console.log(`🧩  Trial ${trialCounter}`, trial);
 
-   
-    startTime          = Date.now();
-    currentTrial       = { ...trial, trialNumber: trialCounter };
+    startTime    = Date.now();
+    currentTrial = { ...trial, trialNumber: trialCounter };
 
-    receiverEl.textContent           = trial.receiver;
-    receiverEl.style.display         = 'block';
+    // Use receiverEl just as an instruction line if you want
+    receiverEl.textContent   = "Choose a task:";
+    receiverEl.style.display = 'block';
 
-    difficultAdditionEl.textContent  = '+' + trial.addition;
-    difficultCreditsEl.textContent   = trial.credit + ' credits';
+    difficultAdditionEl.textContent = '+' + trial.addition;
+    difficultCreditsEl.textContent  = trial.credit + ' credits';
 
     chosenAddition = trial.addition;
     chosenCredits  = trial.credit;
@@ -218,6 +221,7 @@ function displayNextTrial(){
 }
 
 
+
 function proceedToNextTrial(){
     trialIndex++;                    // always move forward exactly one
     console.log(`✅ answered ${trialIndex} / ${trialList.length}`);
@@ -226,101 +230,42 @@ function proceedToNextTrial(){
 
 
 
-const REPS_PER_ROUND = 1;   // ← 1 = each combo appears once per round CHANGE
 
 
 
+
+let trialList  = [];
+let trialIndex = 0;
+
+const REPS_PER_ROUND = 1;   // how many times to repeat each (addition, credit) combo
 
 function buildTrialList () {
-
     trialList  = [];
     trialIndex = 0;
 
-    /* ───────────────── 1. unique combos + id key ───────────────── */
-    const uniqueCombos = [];
-    additions.forEach(a =>
-        credits.forEach(c =>
-            uniqueCombos.push({ id: `${a}_${c}`, addition: a, credit: c })
-        )
-    );
-    const combosPerRound = uniqueCombos.length;   // one of each per bucket
+    // 1. create all unique (addition × credit) combos
+    const baseCombos = [];
+    additions.forEach(a => {
+        credits.forEach(c => {
+            baseCombos.push({
+                receiver: 'Self',   // or 'You' or '' – it's just logged now
+                addition: a,
+                credit: c
+            });
+        });
+    });
 
-    /* ───────────────── 2. four deep-cloned buckets ─────────────── */
-    const rounds = Array.from({ length: 4 }, () =>
-        uniqueCombos.map(c => ({ ...c }))
-    );
-
-    /* ───────────────── 3. locate fixed vs custom buckets ───────── */
-    const fixedIdx  = [];
-    const customIdx = [];
-    roundAssignments.forEach((t, i) =>
-        (t === 'fixed' ? fixedIdx : customIdx).push(i)
-    );
-    if (fixedIdx.length !== 2){
-        console.error('💥 Expected exactly TWO fixed buckets!', roundAssignments);
-        return;
+    // 2. repeat them REPS_PER_ROUND times
+    for (let r = 0; r < REPS_PER_ROUND; r++) {
+        baseCombos.forEach(combo => {
+            trialList.push({ ...combo });
+        });
     }
 
-    /* ───────────────── 4. history object to track duplicates ───── */
-    const history = Object.fromEntries(
-        uniqueCombos.map(c => [c.id, { Self: 0, Charity: 0 }])
-    );
+    // 3. shuffle final trial list
+    shuffleArray(trialList);
 
-    /* ───────────────── 5.  buckets – 1×Self & 1×Charity ───── */
-    rounds[ fixedIdx[0] ].forEach(t => { t.receiver = 'Self';    history[t.id].Self++;    });
-    rounds[ fixedIdx[1] ].forEach(t => { t.receiver = 'Charity'; history[t.id].Charity++; });
-    shuffleArray(rounds[ fixedIdx[0] ]);
-    shuffleArray(rounds[ fixedIdx[1] ]);
-
-    /* ───────────────── 6. helper for CUSTOM buckets ────────────── */
-    function fillCustomBucket(idx){
-        const bucket = rounds[idx];
-        shuffleArray(bucket);   // random order before assignment
-
-        let wantSelf    = Math.round(combosPerRound * selfFrac);
-        let wantCharity = combosPerRound - wantSelf;
-
-        /* 6a – give each combo the receiver it *hasn’t* had yet */
-        bucket.forEach(t => {
-            if (history[t.id].Self === 0 && wantSelf > 0){
-                t.receiver = 'Self';
-                history[t.id].Self++;  wantSelf--;
-            } else if (history[t.id].Charity === 0 && wantCharity > 0){
-                t.receiver = 'Charity';
-                history[t.id].Charity++;  wantCharity--;
-            }
-        });
-
-        /* 6b – still short?  now duplicates are unavoidable      */
-        bucket.forEach(t => {
-            if (!t.receiver){
-                if (wantSelf > 0){
-                    t.receiver = 'Self';
-                    history[t.id].Self++;  wantSelf--;
-                } else {
-                    t.receiver = 'Charity';
-                    history[t.id].Charity++;  wantCharity--;
-                }
-            }
-        });
-
-        shuffleArray(bucket);   // final shuffle purely for display order
-    }
-
-    customIdx.forEach(fillCustomBucket);
-
-    /* ───────────────── 7. flatten (NO extra shuffling) ─────────── */
-    trialList = rounds.flat();
-
-    /* ───────────────── 8. bookkeeping for the CSV ─────────────── */
-    selfTrialPreference    = trialList.filter(t => t.receiver === 'Self').length;
-    charityTrialPreference = trialList.length - selfTrialPreference;
-    selectedAllocation     = allocationPercentage;
-
-    console.log(
-        `📝 Final trial list built – ${trialList.length} trials`,
-        `| Self ${selfTrialPreference} | Charity ${charityTrialPreference}`
-    );
+    console.log(`📝 Final trial list built – ${trialList.length} trials`);
 }
 
 
