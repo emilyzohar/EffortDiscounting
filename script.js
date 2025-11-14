@@ -769,28 +769,21 @@ function endExperiment() {
 
     function showKeyScreen() {
         const t2 = new Date();
-        container.innerHTML = `
-            <div class="content-text" style="text-align:center;">
-                <h2>Task Key:</h2><br>
-                <p>
-                  <strong><u id="uniqueKey">${participantUniqueKey}</u></strong><br><br>
-                  <button class="box" onclick="copyToClipboard()">Click to Copy</button><br><br>
-                  Please paste this code <u><strong>at the bottom of the screen</strong></u>
-                  to prove you have completed this exercise.
-                </p>
-            </div>
-        `;
-        const sc = document.createElement('script');
-        sc.textContent = `
-            function copyToClipboard(){
-                const txt = document.getElementById("uniqueKey").textContent;
-                navigator.clipboard.writeText(txt).then(() => alert("Key copied!"));
-            }
-        `;
+
         document.body.appendChild(sc);
 
         // Only now do we store the REAL data:
         generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, t2);
+        container.innerHTML += `
+    <br><br>
+    <p> Thank you for participating!</p>
+    <button class="box" id="continueBtn">Continue</button>
+`;
+
+document.getElementById("continueBtn").onclick = () => {
+    window.location.href = "https://google.com";
+};
+
     }
 }
 
