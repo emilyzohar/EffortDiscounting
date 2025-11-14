@@ -695,35 +695,31 @@ function endExperiment() {
     const container  = document.querySelector('.experiment-container');
 
     if (phase === 'practice') {
-        // PRACTICE END SCREEN
-        container.innerHTML = `
-            <div style="
-                max-width:500px;margin:40px auto;text-align:center;
-                background:#fff;padding:30px;border-radius:10px;
-                box-shadow:0 4px 12px rgba(0,0,0,.1);">
-                <h2>Practice complete</h2>
-                <p>You’ll now begin the main task. Your choices from now on will be recorded.</p>
-                <button id="startRealBtn" class="box">Start main task</button>
-            </div>
-        `;
+        // Hide task UI
+        taskUI.style.display = 'none';
+
+        // Show practice end screen
+        const practiceEndScreen = document.getElementById('practiceEndScreen');
+        practiceEndScreen.style.display = 'block';
 
         document.getElementById('startRealBtn').onclick = () => {
-            phase = 'main';
+            phase        = 'main';
             timestamp1   = new Date();  // reset start time for real task
             trialResults = [];          // clear out practice data
-            container.innerHTML = '';   // wipe this screen
 
-            // restore task UI
-            container.appendChild(introScreen); // if needed
-            container.appendChild(taskUI);
-            introScreen.style.display = 'none';
-            taskUI.style.display      = 'block';
+            // Hide practice end screen and show task UI
+            practiceEndScreen.style.display = 'none';
+            taskUI.style.display            = 'block';
 
-            buildMainTrialList();      // <-- this is your existing design
+            // If you want these visible immediately:
+            receiverEl.style.display  = 'block';
+            easyEl.style.display      = 'block';
+            difficultEl.style.display = 'block';
+
+            buildMainTrialList();
             displayNextTrial();
         };
-
-        return; // stop here; don't show donation/key for practice
+        return; // don't fall through to main end logic
     }
 
     // ───────────────────────────
