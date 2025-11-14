@@ -139,13 +139,17 @@ function buildPracticeTrialList() {
   trialList  = [];
   trialIndex = 0;
 
+  // 4 simple practice trials
   trialList.push({ receiver: 'Practice', addition: 1, credit: 2 });
   trialList.push({ receiver: 'Practice', addition: 3, credit: 2 });
   trialList.push({ receiver: 'Practice', addition: 1, credit: 4 });
   trialList.push({ receiver: 'Practice', addition: 3, credit: 4 });
 
   shuffleArray(trialList);
+
+  console.log('🔧 Practice trials built:', trialList);
 }
+
 
 
 
