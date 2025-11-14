@@ -13,6 +13,9 @@ const introScreen     = document.getElementById('introScreen');
 const introText       = document.getElementById('introText');
 const startPracticeBtn = document.getElementById('startPracticeBtn');
 const taskUI          = document.getElementById('taskUI');
+const instructionsScreen = document.getElementById('instructionsScreen');
+const startPracticeBtn   = document.getElementById('startPracticeBtn');
+
 
 
 let selectedAllocation = 0;
@@ -77,6 +80,34 @@ let phase = 'practice';   // 'practice' or 'main'
 function start() {
     initParticipant();
     showIntroScreen();    // new function below
+}
+
+function showInstructionsScreen() {
+    // Show instructions
+    instructionsScreen.style.display = 'block';
+
+    // Hide task UI until practice actually starts
+    receiverEl.style.display        = 'none';
+    easyEl.style.display            = 'none';
+    difficultEl.style.display       = 'none';
+    mathTaskEl.style.display        = 'none';
+    answersEl.style.display         = 'none';
+    feedbackEl.style.display        = 'none';
+    fixationCrossEl.style.display   = 'none';
+
+    startPracticeBtn.onclick = () => {
+        instructionsScreen.style.display = 'none';
+
+        // Now show the task UI
+        receiverEl.style.display      = 'block';
+        easyEl.style.display          = 'block';
+        difficultEl.style.display     = 'block';
+
+        // Build and start practice trials
+        phase = 'practice';
+        buildPracticeTrialList();   // you already defined this
+        displayNextTrial();
+    };
 }
 
 function getIntroMessage() {
