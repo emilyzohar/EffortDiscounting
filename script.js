@@ -14,7 +14,6 @@ const introText       = document.getElementById('introText');
 const startPracticeBtn = document.getElementById('startPracticeBtn');
 const taskUI          = document.getElementById('taskUI');
 const instructionsScreen = document.getElementById('instructionsScreen');
-const startPracticeBtn   = document.getElementById('startPracticeBtn');
 
 
 
@@ -79,7 +78,7 @@ let phase = 'practice';   // 'practice' or 'main'
 
 function start() {
     initParticipant();
-    showIntroScreen();    // new function below
+    showInstructionsScreen();    // new function below
 }
 
 function showInstructionsScreen() {
