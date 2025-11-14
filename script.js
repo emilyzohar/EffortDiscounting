@@ -613,14 +613,8 @@ function endExperiment() {
     `;
 
     document.getElementById('donationConfirm').onclick = () => {
-        // Capture the raw attempted donation before clamping
-        const attempted = parseInt(document.getElementById('donationInput').value, 10) || 0;
-        attemptedDonation = attempted;
-
-        // Now enforce that they can’t donate more than they have
-        donatedTickets   = Math.max(0, Math.min(attempted, creditsSelf));
-        creditsSelf     -= donatedTickets;
-        creditsCharity  += donatedTickets;
+      
+       
         showKeyScreen(); // proceed to final screen & CSV
     };
 
