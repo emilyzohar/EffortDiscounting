@@ -86,6 +86,7 @@ function showInstructionsScreen() {
     instructionsScreen.style.display = 'block';
 
     // Hide task UI until practice actually starts
+    taskUI.style.display            = 'none';
     receiverEl.style.display        = 'none';
     easyEl.style.display            = 'none';
     difficultEl.style.display       = 'none';
@@ -97,17 +98,20 @@ function showInstructionsScreen() {
     startPracticeBtn.onclick = () => {
         instructionsScreen.style.display = 'none';
 
-        // Now show the task UI
+        // 👉 THIS WAS MISSING
+        taskUI.style.display      = 'block';
+
+        // Now show the task UI bits
         receiverEl.style.display      = 'block';
         easyEl.style.display          = 'block';
         difficultEl.style.display     = 'block';
 
-        // Build and start practice trials
         phase = 'practice';
-        buildPracticeTrialList();   // you already defined this
+        buildPracticeTrialList();
         displayNextTrial();
     };
 }
+
 
 function getIntroMessage() {
   // Optional URL param: ?msg=Your+custom+text+here
