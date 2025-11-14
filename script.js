@@ -130,19 +130,7 @@ function getIntroMessage() {
 
 
 
-function showIntroScreen() {
-  introText.textContent = getIntroMessage();
-  introScreen.style.display = 'block';
-  taskUI.style.display      = 'none';
 
-  startPracticeBtn.onclick = () => {
-    introScreen.style.display = 'none';
-    taskUI.style.display      = 'block';
-    phase = 'practice';
-    buildPracticeTrialList();
-    displayNextTrial();
-  };
-}
 
 let trialList  = [];
 let trialIndex = 0;
@@ -766,23 +754,26 @@ function endExperiment() {
     };
 
     function showKeyScreen() {
-        const t2 = new Date();
+    const t2 = new Date();
 
-        document.body.appendChild(sc);
+    // Only now do we store the REAL data:
+    generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, t2);
 
-        // Only now do we store the REAL data:
-        generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, t2);
-        container.innerHTML += `
-    <br><br>
-    <p> Thank you for participating!</p>
-    <button class="box" id="continueBtn">Continue</button>
-`;
+    container.innerHTML = `
+        <div class="content-text" style="text-align:center;">
+            <p>Thank you for participating!</p>
+            <button class="box" id="continueBtn">Continue</button>
+        </div>
+    `;
 
-document.getElementById("continueBtn").onclick = () => {
-    window.location.href = "https://google.com";
-};
+    
 
-    }
+    // redirect button
+    document.getElementById("continueBtn").onclick = () => {
+        window.location.href = "https://google.com";   // change to your actual URL
+    };
+}
+
 }
 
 
