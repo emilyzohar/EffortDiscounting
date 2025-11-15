@@ -611,7 +611,8 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, timesta
       item.correct_position,
       item.time_to_decision,
       item.answer_time_to_decision,
-      item.timedOut
+      item.timedOut,
+      creditsSelf
     ]);
   }
 
@@ -714,6 +715,10 @@ function endExperiment() {
 
   container.innerHTML = `
     <div class="content-text" style="text-align:center;">
+    <h2 style="margin-top:0;">Congratulations!</h2>
+            <p style="font-size:1.1rem;">
+                You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
+            </p>
       <p>Thank you for participating!</p>
       <button class="box" id="continueBtn">Continue</button>
     </div>
