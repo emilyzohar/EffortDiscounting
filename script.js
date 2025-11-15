@@ -14,6 +14,8 @@ const introText       = document.getElementById('introText');
 const startPracticeBtn = document.getElementById('startPracticeBtn');
 const taskUI          = document.getElementById('taskUI');
 const instructionsScreen = document.getElementById('instructionsScreen');
+const additionValueEl = document.getElementById('additionValue');
+
 
 
 
@@ -44,6 +46,8 @@ let selfFrac = 0.5;
 let attemptedDonation = 0;
 let selfTrialPreference  = 0;
 let charityTrialPreference = 0;
+let participantChoice = null;
+
 
 
 
@@ -536,7 +540,7 @@ function checkAnswer(isCorrect) {
     feedbackEl.innerHTML = `${fb}<br><br><span style="font-size:.8em;">${creditsEarned} credits</span>`;
 
     // ── log trial data ──────────────────────────────────────
-    trialResults.push({
+        trialResults.push({
         trialNumber          : currentTrial.trialNumber,
         receiver             : currentTrial.receiver,
         easy_addition        : 0,
@@ -555,16 +559,6 @@ function checkAnswer(isCorrect) {
     });
     timedOut = false;
 
-    if (phase === 'main') {
-  const interimTimestamp = new Date();
-  generateCSV(
-    trialResults,
-    participantUniqueKey,
-    participantSID,
-    timestamp1,
-    interimTimestamp
-  );
-}
 
     // ── short ISI, then next trial ──────────────────────────
     setTimeout(() => {
@@ -586,95 +580,86 @@ function checkAnswer(isCorrect) {
 // Converts the data array to CSV format and triggers a download
 function generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, timestamp2) {
 
-    const header = [
-        "participantSID","startTime","finishTime","TrialNumber","uniqueKey",
-        "receiver","easy_addition","easy_credits","difficult_addition",
-        "difficult_credits","choice","answer","answer_correct","shown_numbers",
-        "incorrect_option","correct_position","time_to_decision",
-        "answer_time_to_decision","timedOut",
-        "credits_self_total","credits_charity_total",
-        "actual_donated_tickets","attempted_donation",
-        "self_trial_preference","charity_trial_preference", "allocationPercentage"
-    ];
-    const csvRows = [header];
+  const header = [
+    "participantSID","startTime","finishTime","TrialNumber","uniqueKey",
+    "receiver","easy_addition","easy_credits","difficult_addition",
+    "difficult_credits","choice","answer","answer_correct","shown_numbers",
+    "incorrect_option","correct_position","time_to_decision",
+    "answer_time_to_decision","timedOut",
+    "credits_self_total","credits_charity_total",
+    "actual_donated_tickets","attempted_donation",
+    "self_trial_preference","charity_trial_preference", "allocationPercentage"
+  ];
+  const csvRows = [header];
 
-    for (const item of trialResults) {
-        csvRows.push([
-            participantSID,
-            timestamp1,
-            timestamp2,
-            item.trialNumber,
-            participantUniqueKey,
-            item.receiver,
-            item.easy_addition,
-            item.easy_credits,
-            item.difficult_addition,
-            item.difficult_credits,
-            item.choice,
-            item.answer,
-            item.answer_correct,
-            item.shown_numbers,
-            item.incorrect_option,
-            item.correct_position,
-            item.time_to_decision,
-            item.answer_time_to_decision,
-            item.timedOut,
-            creditsSelf,
-            creditsCharity,
-            donatedTickets,
-            attemptedDonation,
-            selfTrialPreference,
-            charityTrialPreference,
-            selectedAllocation
-        ]);
+  for (const item of trialResults) {
+    csvRows.push([
+      participantSID,
+      timestamp1,
+      timestamp2,
+      item.trialNumber,
+      participantUniqueKey,
+      item.easy_addition,
+      item.easy_credits,
+      item.difficult_addition,
+      item.difficult_credits,
+      item.choice,
+      item.answer,
+      item.answer_correct,
+      item.shown_numbers,
+      item.incorrect_option,
+      item.correct_position,
+      item.time_to_decision,
+      item.answer_time_to_decision,
+      item.timedOut
+    ]);
+  }
+
+  const csvContent = csvRows.map(e => e.join(",")).join("\n");
+
+  // ----- build filename (same logic you had) -----
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}_${String(currentDate.getHours()).padStart(2, '0')}`;
+  const filename = `${participantSID}_${formattedDate}.csv`;
+
+  // ===== SEND TO DATAPIPE (no Netlify, no AWS) =====
+  fetch("https://pipe.jspsych.org/api/data", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      experimentID: "R7hDnmaVe5J0",   // your DataPipe experiment ID
+      filename: filename,
+      data: csvContent                // raw CSV string
+    })
+  })
+  .then(response => response.json())
+  .then(json => {
+    if (json.message === "Success") {
+      console.log("✅ DataPipe upload success:", json);
+    } else {
+      console.error("⚠️ DataPipe error:", json);
     }
+  })
+  .catch(err => {
+    console.error("❌ DataPipe upload failed:", err);
+  });
 
-    const csvContent = csvRows.map(e => e.join(",")).join("\n");
+  // (optional) also log CSV locally for debugging
+  console.log(csvContent);
 
-    // Upload to serverless function
-    const uploadUrl = '/.netlify/functions/upload-csv'; 
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', uploadUrl, true);
-
-    // xhr.setRequestHeader('Content-Type', 'text/csv;charset=utf-8');
-  // Retrieve SID value for filename and current date
-      //const filename = participantSID;
-      //xhr.setRequestHeader('X-Filename', filename);
-            const currentDate = new Date(); //new stuff (next 3 lines too)
-            //const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-            const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}_${String(currentDate.getHours()).padStart(2, '0')}`;
-            const filename = `${participantSID}_${formattedDate}`;
-            xhr.setRequestHeader('X-Filename', filename);
-
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          console.log('File uploaded successfully:');
-        } else {
-          console.error('Error uploading file:', xhr.responseText);
-        }
-      }
-    };
-    xhr.send(csvContent);
-
-    console.log(csvContent);
-    // Create a Blob object with the CSV content
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  
-    // Create a link element, and set its attributes
-    const link = document.createElement("a");
-  
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "trial_results.csv");
-  
-    // Append the link to the DOM and simulate a click to start the download
-    document.body.appendChild(link);
-    //link.click();
-  
-    // Remove the link from the DOM
-    document.body.removeChild(link);
+  // OPTIONAL: keep local download for backup
+  /*
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", "trial_results.csv");
+  document.body.appendChild(link);
+  // link.click();
+  document.body.removeChild(link);
+  */
 }
 
 
@@ -692,68 +677,56 @@ const participantUniqueKey = generateUniqueKey();
 
 function endExperiment() {
 
-    const container  = document.querySelector('.experiment-container');
+  const container  = document.querySelector('.experiment-container');
 
-    if (phase === 'practice') {
-        // Hide task UI
-        taskUI.style.display = 'none';
+  if (phase === 'practice') {
+    // Hide task UI
+    taskUI.style.display = 'none';
 
-        // Show practice end screen
-        const practiceEndScreen = document.getElementById('practiceEndScreen');
-        practiceEndScreen.style.display = 'block';
+    // Show practice end screen
+    const practiceEndScreen = document.getElementById('practiceEndScreen');
+    practiceEndScreen.style.display = 'block';
 
-        document.getElementById('startRealBtn').onclick = () => {
-            phase        = 'main';
-            timestamp1   = new Date();  // reset start time for real task
-            trialResults = [];          // clear out practice data
+    document.getElementById('startRealBtn').onclick = () => {
+      phase        = 'main';
+      timestamp1   = new Date();  // reset start time for real task
+      trialResults = [];          // clear out practice data
 
-            // Hide practice end screen and show task UI
-            practiceEndScreen.style.display = 'none';
-            taskUI.style.display            = 'block';
+      // Hide practice end screen and show task UI
+      practiceEndScreen.style.display = 'none';
+      taskUI.style.display            = 'block';
 
-            // If you want these visible immediately:
-            receiverEl.style.display  = 'block';
-            easyEl.style.display      = 'block';
-            difficultEl.style.display = 'block';
+      receiverEl.style.display  = 'block';
+      easyEl.style.display      = 'block';
+      difficultEl.style.display = 'block';
 
-            buildMainTrialList();
-            displayNextTrial();
-        };
-        return; // don't fall through to main end logic
-    }
-
-    // ───────────────────────────
-    // MAIN TASK END (your old code)
-    // ───────────────────────────
-
-    const timestamp2 = new Date();
-
-    showKeyScreen();
-
-    
-
-    function showKeyScreen() {
-    const t2 = new Date();
-
-    // Only now do we store the REAL data:
-    generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, t2);
-
-    container.innerHTML = `
-        <div class="content-text" style="text-align:center;">
-            <p>Thank you for participating!</p>
-            <button class="box" id="continueBtn">Continue</button>
-        </div>
-    `;
-
-    
-
-    // redirect button
-    document.getElementById("continueBtn").onclick = () => {
-        window.location.href = "https://google.com";   // change to your actual URL
+      buildMainTrialList();
+      displayNextTrial();
     };
+    return;
+  }
+
+  // MAIN TASK END
+  const timestamp2 = new Date();
+
+  // Save once here
+  generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, timestamp2);
+
+  container.innerHTML = `
+    <div class="content-text" style="text-align:center;">
+      <p>Thank you for participating!</p>
+      <button class="box" id="continueBtn">Continue</button>
+    </div>
+  `;
+
+  document.getElementById("continueBtn").onclick = () => {
+    window.location.href = "https://google.com";   // change to your actual URL
+  };
 }
 
-}
+
+
+
 
 
 
