@@ -127,17 +127,17 @@ function getIntroMessage() {
   if (cond === '1') {
   return `
     <p>When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations.</p>
-
+    <br/>
     <p>You might notice a sense of <b>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</b></p>
     <p>These reactions can feel intense, but they’re also <b> signs that you’re actively moving toward your goal. </b> </p>
     <p>They show that your mind and body are engaged and using their resources to help you perform well.</p>
-
-    <p>Think of it like the body’s <i> fight-or-flight response:</i> when something matters and requires effort, your system shifts into a more alert, energized state. </>
+<br/>
+    <p>Think of it like the body’s <i> fight-or-flight response:</i> when something matters and requires effort, your system shifts into a more alert, energized state.</p>
     <p>Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.</p>
-
+<br/>
     <p>Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.</p>
     <p>People experience these sensations even when they have more than enough ability to succeed.</p>
-
+<br/>
     <p>As you begin the next task, keep in mind that the <b> feelings that come with effort are there to support you</b>—they’re part of how your body and mind help you rise to a challenge.</p>
   `;
 }
