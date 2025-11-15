@@ -126,7 +126,7 @@ function getIntroMessage() {
     if (cond === '1') {
         return "When people work hard on a task, it’s completely normal to feel a mix of emotions...";
     }
-    if (cond === '2') {
+    else {
         return "You’ll see number sequences and choose between easy and difficult versions of the task.";
     }
 
