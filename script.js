@@ -128,17 +128,17 @@ function getIntroMessage() {
   return `
     <p>When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations.</p>
 
-    <p>You might notice a sense of challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation. These reactions can feel intense, but they’re also signs that you’re actively moving toward your goal. They show that your mind and body are engaged and using their resources to help you perform well.</p>
+    <p>You might notice a sense of <b>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</b></p>
+    <p>These reactions can feel intense, but they’re also <b> signs that you’re actively moving toward your goal. </b> </p>
+    <p>They show that your mind and body are engaged and using their resources to help you perform well.</p>
 
-    <p>Think of it like the body’s fight-or-flight response: when something matters and requires effort, your system shifts into a more alert, energized state. Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.</p>
+    <p>Think of it like the body’s <i> fight-or-flight response:</i> when something matters and requires effort, your system shifts into a more alert, energized state. </>
+    <p>Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.</p>
 
-    <p>Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing. People experience these sensations even when they have more than enough ability to succeed.</p>
+    <p>Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.</p>
+    <p>People experience these sensations even when they have more than enough ability to succeed.</p>
 
-    <p>As you move into the next task, treat any effort-related sensations as useful signals—reminders that what you’re doing matters, that you’re investing yourself, and that you’re pushing in a meaningful direction.</p>
-
-    <p>Effort can feel tiring or uncomfortable, but those feelings are part of doing something that requires focus and commitment. Instead of viewing them as obstacles, see them as evidence that you’re engaged and making progress.</p>
-
-    <p>As you begin the next task, keep in mind that the feelings that come with effort are there to support you—they’re part of how your body and mind help you rise to a challenge.</p>
+    <p>As you begin the next task, keep in mind that the <b> feelings that come with effort are there to support you</b>—they’re part of how your body and mind help you rise to a challenge.</p>
   `;
 }
 
