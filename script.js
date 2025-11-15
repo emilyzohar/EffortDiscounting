@@ -82,6 +82,7 @@ let phase = 'practice';   // 'practice' or 'main'
 
 function start() {
     initParticipant();
+    getIntroMessage();
     showInstructionsScreen();    // new function below
 }
 
