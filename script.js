@@ -14,7 +14,7 @@ const introText       = document.getElementById('introText');
 const startPracticeBtn = document.getElementById('startPracticeBtn');
 const taskUI          = document.getElementById('taskUI');
 const instructionsScreen = document.getElementById('instructionsScreen');
-const additionValueEl = document.getElementById('additionValue');
+
 
 
 
