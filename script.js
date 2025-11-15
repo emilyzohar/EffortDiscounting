@@ -125,8 +125,22 @@ function getIntroMessage() {
   const cond = getUrlParam('cond');
 
   if (cond === '1') {
-    return "When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations. You might notice a sense of challenge, a boost in focus, or moments of frustration, fatigue, stress, or even irritation. These reactions can feel intense, but they’re also signs that you’re actively moving toward your goal. They show that your mind and body are engaged and using their resources to help you perform well. Think of it like the body’s “fight-or-flight” response: when something matters and requires effort, your system shifts into a more alert, energized state. High-effort activities work the same way. Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom–a shift into deeper engagement. Feelings like stress, frustration, or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing. Sometimes we misinterpret these sensations as evidence that we don’t have the skills or that we’re on the brink of failure. In reality, people can experience these feelings even when they have more than enough ability to succeed. As you move into the next task, we encourage you to treat any effort-related sensations as useful signals. They’re reminders that what you’re doing matters, that you’re investing yourself, and that you’re pushing in a meaningful direction. These sensations are part of your body and mind preparing you to meet the task’s demands. You don’t need to get rid of or ignore the feelings that come with high effort. Yes, effort can feel tiring or uncomfortable at times—but those feelings are simply part of doing something that requires focus and commitment. Instead of viewing them as obstacles, try to see them as evidence that you’re engaged, that you’re challenging yourself, and that you’re making progress. As you begin the next task, keep in mind that the feelings that come with effort are there to support you. They’re part of how your body and mind help you rise to a challenge.";
-  }
+  return (
+    "When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations. "
+    + "You might notice a sense of challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation. "
+    + "These reactions can feel intense, but they’re also signs that you’re actively moving toward your goal. "
+    + "They show that your mind and body are engaged and using their resources to help you perform well. "
+    + "Think of it like the body’s fight-or-flight response: when something matters and requires effort, your system shifts into a more alert, energized state. "
+    + "Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement. "
+    + "Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing. "
+    + "Sometimes we misinterpret these sensations as evidence that we don’t have the skills or that we’re on the brink of failure. "
+    + "In reality, people experience these feelings even when they have more than enough ability to succeed. "
+    + "As you move into the next task, treat any effort-related sensations as useful signals—reminders that what you’re doing matters, that you’re investing yourself, and that you’re pushing in a meaningful direction. "
+    + "Effort can feel tiring or uncomfortable, but those feelings are part of doing something that requires focus and commitment. "
+    + "Instead of viewing them as obstacles, see them as evidence that you’re engaged and making progress. "
+    + "As you begin the next task, keep in mind that the feelings that come with effort are there to support you—they’re part of how your body and mind help you rise to a challenge."
+  );
+}
 
   if (cond === '2') {
     return "You’ll see number sequences and choose between easy and difficult versions of the task.";
