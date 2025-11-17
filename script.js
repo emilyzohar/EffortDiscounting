@@ -54,7 +54,7 @@ let participantChoice = null;
 
 const receivers = ['Charity', 'Self']; //  For testing...
 const additions = [1, 3, 7]; // , 3, 7
-const credits = [2, 4, 8]; //, 4, 8
+const credits = [2, 4, 6, 8]; //, 4, 8
 
 /* ───────────────── Allocation control ───────────────── */
 let allocationPercentage = 50;          // 25, 50, or 75
@@ -364,7 +364,7 @@ function proceedToNextTrial(){
 
 
 
-const REPS_PER_ROUND = 1;   // how many times to repeat each (addition, credit) combo
+const REPS_PER_ROUND = 2;   // how many times to repeat each (addition, credit) combo
 
 function buildMainTrialList () {
     trialList  = [];
