@@ -116,6 +116,7 @@ function showInstructionsScreen() {
 
 
 
+
 function getIntroMessage() {
   const msgFromUrl = getUrlParam('msg');
   if (msgFromUrl && msgFromUrl.trim() !== '') {
@@ -126,21 +127,52 @@ function getIntroMessage() {
 
   if (cond === '1') {
   return `
-    <p>When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations.</p>
-    <br/>
-    <p>You might notice a sense of <b>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</b></p>
-    <p>These reactions can feel intense, but they’re also <b> signs that you’re actively moving toward your goal. </b> </p>
-    <p>They show that your mind and body are engaged and using their resources to help you perform well.</p>
-<br/>
-    <p>Think of it like the body’s <i> fight-or-flight response:</i> when something matters and requires effort, your system shifts into a more alert, energized state.</p>
-    <p>Research shows that when tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.</p>
-<br/>
-    <p>Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.</p>
-    <p>People experience these sensations even when they have more than enough ability to succeed.</p>
-<br/>
-    <p>As you begin the next task, keep in mind that the <b> feelings that come with effort are there to support you</b>—they’re part of how your body and mind help you rise to a challenge.</p>
-  `;
-}
+  <!-- PAGE 1 -->
+<div id="page1" class="page">
+  <p>When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations.</p>
+
+  <p>
+    You might notice a sense of <strong>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</strong>
+    These reactions can feel intense, but they’re also <strong>signs that you’re actively moving toward your goal.</strong>
+  </p>
+
+  <p>
+    They show that your mind and body are engaged and using their resources to help you perform well.
+  </p>
+
+  <button class="nextBtn" data-next="page2">Next</button>
+</div>
+
+
+<!-- PAGE 2 -->
+<div id="page2" class="page" style="display:none;">
+  <p>
+    Think of it like the body’s <em>fight-or-flight response</em>: when something matters and requires effort, your system shifts into a more alert, energized state.
+  </p>
+
+  <p>
+    Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.
+  </p>
+
+  <p>
+    Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.
+    People experience these sensations even when they have more than enough ability to succeed.
+  </p>
+
+  <button class="nextBtn" data-next="page3">Next</button>
+</div>
+
+
+<!-- PAGE 3 -->
+<div id="page3" class="page" style="display:none;">
+  <p>
+    As you begin the next task, keep in mind that the <strong>feelings that come with effort are there to support you</strong>—they’re part of how your body and mind help you rise to a challenge.
+  </p>
+
+  <button id="finalNext">Next</button>
+</div>
+`;
+  }
 
   if (cond === '2') {
     return "You’ll see number sequences and choose between easy and difficult versions of the task.";
@@ -150,21 +182,58 @@ function getIntroMessage() {
   return "You’ll now complete a short practice version of the task to get familiar with it. After practice, the real trials will begin.";
 }
 
+// Handle clicks on any .nextBtn inside the intro pages
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.nextBtn');
+  if (!btn) return;
+
+  const next = btn.dataset.next;
+  if (!next) return;
+
+  // Only hide/show intro pages
+  document.querySelectorAll('#introText .page').forEach(p => {
+    p.style.display = 'none';
+  });
+  const nextPage = document.getElementById(next);
+  if (nextPage) {
+    nextPage.style.display = 'block';
+  }
+});
 
 function showIntroScreen() {
-  const msg = getIntroMessage();
+  const msg  = getIntroMessage();
+  const cond = getUrlParam('cond');
 
-  introText.innerHTML = msg;          // <-- THIS was causing null before
-  introScreen.style.display       = 'block';
+  introText.innerHTML = msg;
+  introScreen.style.display        = 'block';
   instructionsScreen.style.display = 'none';
-  taskUI.style.display            = 'none';
+  taskUI.style.display             = 'none';
 
   const introNextBtn = document.getElementById('introNextBtn');
-  introNextBtn.onclick = () => {
-    introScreen.style.display = 'none';
-    showInstructionsScreen();
-  };
+
+  if (cond === '1') {
+    // Multi-page intro: use the button on page 3 instead
+    if (introNextBtn) introNextBtn.style.display = 'none';
+
+    const finalNextBtn = document.getElementById('finalNext');
+    if (finalNextBtn) {
+      finalNextBtn.onclick = () => {
+        introScreen.style.display = 'none';
+        showInstructionsScreen();
+      };
+    }
+  } else {
+    // Simple intro: use the standard introNextBtn
+    if (introNextBtn) {
+      introNextBtn.style.display = 'inline-block';
+      introNextBtn.onclick = () => {
+        introScreen.style.display = 'none';
+        showInstructionsScreen();
+      };
+    }
+  }
 }
+
 
 
 let trialList  = [];

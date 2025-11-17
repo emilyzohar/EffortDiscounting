@@ -41,6 +41,22 @@ body {
   font-size: 19px;
 }
 
+.page {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.page p {
+  margin-bottom: 1.2em;
+}
+
+button {
+  margin-top: 2em;
+}
+
 .box {
     padding: 20px;
     border: 1px solid #333;
@@ -51,6 +67,58 @@ body {
 
 .box:hover {
     background-color: #ddd;
+}
+
+#instructionsScreen {
+  text-align: center;
+}
+
+.instructions-card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.instructions-title {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.instructions-subtitle {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-size: 1.05em;
+}
+
+.instructions-intro,
+.instructions-note {
+  margin-bottom: 1em;
+}
+
+.instructions-list {
+  text-align: left;
+  margin: 0 0 1.2em 0;
+  padding-left: 1.2em;
+}
+
+.instructions-list li {
+  margin-bottom: 0.6em;
+}
+
+.instructions-list code {
+  font-family: monospace;
+  padding: 0 0.15em;
+}
+
+.instructions-button {
+  margin-top: 1.2em;
+  padding: 0.6em 1.8em;
+  font-size: 1rem;
 }
 
 .math-task {

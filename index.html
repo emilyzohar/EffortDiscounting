@@ -16,24 +16,42 @@
 
 <!-- INSTRUCTIONS SCREEN (text + start practice) -->
 <div id="instructionsScreen" style="display:none;">
-  <h2>Instructions</h2>
-  <p>
-    In this task, you will:
-  </p>
-  <ul>
-    <li>Pick between completing an easy or a hard task.</li>
-    <li>Each task is associated with a different amount of credits that will be used in a raffle.</li>
-    <li>Once you pick a difficulty, you will see three numbers appear one at a time.</li>
-    <li>Your job is to keep them in mind.</li>
-    <li>Then you’ll see two answer options (each is a sequence of three numbers).</li>
-    <li>Choose which option correctly shows the result of adding the shown number
-        (e.g., +1, +3, +7) to each of the original three numbers.</li>
-  </ul>
-  <p>
-    You’ll first complete a few <strong>practice trials</strong> so you can get used to the task.
-    Your real data will only be recorded in the main task.
-  </p>
-  <button id="startPracticeBtn" class="box">Start practice</button>
+  <div class="instructions-card">
+    <h2 class="instructions-title">Instructions</h2>
+
+    <p class="instructions-intro">
+      In this task, you’ll make choices about how hard you want to work and earn credits for a raffle.
+    </p>
+
+    <h3 class="instructions-subtitle">On each trial, you will:</h3>
+    <ol class="instructions-list">
+      <li>
+        <strong>Choose a difficulty.</strong> Pick between an easy or a hard version of the task.  
+        Hard tasks are worth more credits in the raffle.
+      </li>
+      <li>
+        <strong>Watch three numbers.</strong> After you choose, three numbers will appear 
+        one at a time. Try to keep them in mind.
+      </li>
+      <li>
+        <strong>Do the mental addition.</strong> You’ll see a value like <code>+1</code>, <code>+3</code>, or <code>+7</code>.
+        Imagine adding that number to each of the three numbers you just saw. (+1: 195 -> 206; 9 loops back to 0)
+      </li>
+      <li>
+        <strong>Pick the correct sequence.</strong> Two answer options will appear, each showing a sequence of three numbers.
+        Choose the option that correctly shows the result of the addition for all three numbers.
+      </li>
+    </ol>
+
+    <p class="instructions-note">
+      You’ll first complete a few <strong>practice trials</strong> so you can get used to the task.  
+      Your real data will only be recorded during the main task.
+    </p>
+
+    <button id="startPracticeBtn" class="box instructions-button">
+      Start practice
+    </button>
+  </div>
 </div>
 
 <div id="taskUI" style="display:none;">
