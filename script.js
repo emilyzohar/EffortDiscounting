@@ -52,9 +52,9 @@ let participantChoice = null;
 
 
 
-const receivers = ['Charity', 'Self']; //  For testing...
+const receivers = ['Self']; //  For testing...
 const additions = [1, 3, 7]; // , 3, 7
-const credits = [2, 4, 6, 8]; //, 4, 8
+const credits = [2, 4, 8]; //, 4, 8
 
 /* ───────────────── Allocation control ───────────────── */
 let allocationPercentage = 50;          // 25, 50, or 75
