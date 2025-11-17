@@ -24,6 +24,22 @@ body {
     width: 400px;
     margin: 0 auto;
 }
+.effort-text {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.effort-text p {
+  margin-bottom: 1.2em;
+}
+
+.effort-final {
+  margin-top: 2em;
+  font-size: 19px;
+}
 
 .box {
     padding: 20px;
