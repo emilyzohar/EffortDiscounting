@@ -985,8 +985,10 @@ if (postTaskForm) {
     `;
 
     document.getElementById("continueBtn").onclick = () => {
-      window.location.href = "https://google.com";
-    };
+  window.location.href =
+    `https://utscpsych.sona-systems.com/webstudy_credit.aspx?experiment_id=1196&credit_token=38c313f1f6d34360be516e7d353e1b78&survey_code=${participantSID}`;
+};
+
   });
 } else {
   console.warn('⚠️ postTaskForm is null when script ran');
