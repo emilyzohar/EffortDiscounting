@@ -94,6 +94,23 @@ button {
   margin-bottom: 0.5em;
   font-size: 1.05em;
 }
+#introNextBtn {
+  display: none;
+}
+
+.likert-item p {
+  font-size: 1.1rem; /* question size */
+  margin-bottom: 8px;
+}
+
+.likert-item label {
+  font-size: 0.9rem;       /* smaller answers */
+  display: inline-block;   /* horizontal layout */
+  margin-right: 12px;      /* spacing between options */
+  margin-bottom: 6px;      /* slight spacing below row */
+}
+
+
 
 .instructions-intro,
 .instructions-note {

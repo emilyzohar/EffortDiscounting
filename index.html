@@ -10,8 +10,69 @@
     <div class="experiment-container">
 
 <div id="introScreen" style="display:none;">
-  <p id="introText"></p>
+  <div id="introText"></div>
   <button id="introNextBtn" class="box">Next</button>
+</div>
+
+<div id="effortSurveyScreen" style="display:none;">
+  <div class="instructions-card">
+    <h2>Quick questions before the task</h2>
+    <p>Please indicate how much you agree or disagree with the following statements.</p>
+
+    <form id="effortSurveyForm">
+      <div class="likert-item">
+        <p>The feelings of effort are always bad and I should avoid them</p>
+        <label><input type="radio" name="bad" value="1" required> Strongly Disagree</label>
+        <label><input type="radio" name="bad" value="2"> 2</label>
+        <label><input type="radio" name="bad" value="3"> 3</label>
+        <label><input type="radio" name="bad" value="4"> 4</label>
+        <label><input type="radio" name="bad" value="5"> 5</label>
+        <label><input type="radio" name="bad" value="6"> Strongly Agree</label>
+      </div>
+
+      <div class="likert-item">
+        <p>The feelings of effort can be good and I should make use of them</p>
+        <label><input type="radio" name="good" value="1" required> Strongly Disagree</label>
+        <label><input type="radio" name="good" value="2"> 2</label>
+        <label><input type="radio" name="good" value="3"> 3</label>
+        <label><input type="radio" name="good" value="4"> 4</label>
+        <label><input type="radio" name="good" value="5"> 5</label>
+        <label><input type="radio" name="good" value="6"> Strongly Agree</label>
+      </div>
+
+      <div class="likert-item">
+        <p>The feelings of effort can help me make progress</p>
+        <label><input type="radio" name="help_progress" value="1" required> Strongly Disagree</label>
+        <label><input type="radio" name="help_progress" value="2"> 2</label>
+        <label><input type="radio" name="help_progress" value="3"> 3</label>
+        <label><input type="radio" name="help_progress" value="4"> 4</label>
+        <label><input type="radio" name="help_progress" value="5"> 5</label>
+        <label><input type="radio" name="help_progress" value="6"> Strongly Agree</label>
+      </div>
+
+      <div class="likert-item">
+        <p>The feelings of effort stop me from making progress</p>
+        <label><input type="radio" name="stop_progress" value="1" required> Strongly Disagree</label>
+        <label><input type="radio" name="stop_progress" value="2"> 2</label>
+        <label><input type="radio" name="stop_progress" value="3"> 3</label>
+        <label><input type="radio" name="stop_progress" value="4"> 4</label>
+        <label><input type="radio" name="stop_progress" value="5"> 5</label>
+        <label><input type="radio" name="stop_progress" value="6"> Strongly Agree</label>
+      </div>
+
+      <div class="likert-item">
+        <p>The feelings of effort make it harder to get things done and reach my goals</p>
+        <label><input type="radio" name="goals" value="1" required> Strongly Disagree</label>
+        <label><input type="radio" name="goals" value="2"> 2</label>
+        <label><input type="radio" name="goals" value="3"> 3</label>
+        <label><input type="radio" name="goals" value="4"> 4</label>
+        <label><input type="radio" name="goals" value="5"> 5</label>
+        <label><input type="radio" name="goals" value="6"> Strongly Agree</label>
+      </div>
+
+      <button type="submit" class="box">Continue</button>
+    </form>
+  </div>
 </div>
 
 <!-- INSTRUCTIONS SCREEN (text + start practice) -->
@@ -53,6 +114,228 @@
     </button>
   </div>
 </div>
+
+
+<div id="postTaskScreen" style="display:none;">
+<form id="postTaskForm">  
+  <!-- PAGE 1 -->
+  <div class="postPage" id="postPage1">
+    <h2>Final Questions</h2>
+    <p>During the task, to what extent did you feel the following?</p>
+
+    <div class="likert-item">
+      <p>Overwhelmed</p>
+      <label><input type="radio" name="overwhelmed" value="1" > Not at all</label>
+      <label><input type="radio" name="overwhelmed" value="2"> 2</label>
+      <label><input type="radio" name="overwhelmed" value="3"> 3</label>
+      <label><input type="radio" name="overwhelmed" value="4"> 4</label>
+      <label><input type="radio" name="overwhelmed" value="5"> 5</label>
+      <label><input type="radio" name="overwhelmed" value="6"> Extremely</label>
+    </div>
+
+    <div class="likert-item">
+      <p>Bored</p>
+      <label><input type="radio" name="bored" value="1" > Not at all</label>
+      <label><input type="radio" name="bored" value="2"> 2</label>
+      <label><input type="radio" name="bored" value="3"> 3</label>
+      <label><input type="radio" name="bored" value="4"> 4</label>
+      <label><input type="radio" name="bored" value="5"> 5</label>
+      <label><input type="radio" name="bored" value="6"> Extremely</label>
+    </div>
+
+    <div class="likert-item">
+      <p>Fatigued</p>
+      <label><input type="radio" name="fatigued" value="1" > Not at all</label>
+      <label><input type="radio" name="fatigued" value="2"> 2</label>
+      <label><input type="radio" name="fatigued" value="3"> 3</label>
+      <label><input type="radio" name="fatigued" value="4"> 4</label>
+      <label><input type="radio" name="fatigued" value="5"> 5</label>
+      <label><input type="radio" name="fatigued" value="6"> Extremely</label>
+    </div>
+
+     <div class="likert-item">
+        <p>Frustrated</p>
+        <label><input type="radio" name="frustrated" value="1"> Not at all</label>
+        <label><input type="radio" name="frustrated" value="2"> 2</label>
+        <label><input type="radio" name="frustrated" value="3"> 3</label>
+        <label><input type="radio" name="frustrated" value="4"> 4</label>
+        <label><input type="radio" name="frustrated" value="5"> 5</label>
+        <label><input type="radio" name="frustrated" value="6"> Extremely</label>
+      </div>
+
+      
+
+    <button type="button" class="postNext" data-next="postPage2">Next</button>
+
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="postPage" id="postPage2" style="display:none;">
+   <div class="likert-item">
+        <p>Stressed</p>
+        <label><input type="radio" name="stressed" value="1"> Not at all</label>
+        <label><input type="radio" name="stressed" value="2"> 2</label>
+        <label><input type="radio" name="stressed" value="3"> 3</label>
+        <label><input type="radio" name="stressed" value="4"> 4</label>
+        <label><input type="radio" name="stressed" value="5"> 5</label>
+        <label><input type="radio" name="stressed" value="6"> Extremely</label>
+      </div>
+
+       <div class="likert-item">
+        <p>Challenge</p>
+        <label><input type="radio" name="challenge" value="1"> Not at all</label>
+        <label><input type="radio" name="challenge" value="2"> 2</label>
+        <label><input type="radio" name="challenge" value="3"> 3</label>
+        <label><input type="radio" name="challenge" value="4"> 4</label>
+        <label><input type="radio" name="challenge" value="5"> 5</label>
+        <label><input type="radio" name="challenge" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>Encouraged</p>
+        <label><input type="radio" name="encouraged" value="1"> Not at all</label>
+        <label><input type="radio" name="encouraged" value="2"> 2</label>
+        <label><input type="radio" name="encouraged" value="3"> 3</label>
+        <label><input type="radio" name="encouraged" value="4"> 4</label>
+        <label><input type="radio" name="encouraged" value="5"> 5</label>
+        <label><input type="radio" name="encouraged" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>Pride</p>
+        <label><input type="radio" name="pride" value="1"> Not at all</label>
+        <label><input type="radio" name="pride" value="2"> 2</label>
+        <label><input type="radio" name="pride" value="3"> 3</label>
+        <label><input type="radio" name="pride" value="4"> 4</label>
+        <label><input type="radio" name="pride" value="5"> 5</label>
+        <label><input type="radio" name="pride" value="6"> Extremely</label>
+      </div>
+
+    <button type="button" class="postNext" data-next="postPage3">Next</button>
+
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="postPage" id="postPage3" style="display:none;">
+    <div class="likert-item">
+        <p>How pleasant was the task?</p>
+        <label><input type="radio" name="pleasant_1" value="1"> Not at all</label>
+        <label><input type="radio" name="pleasant_1" value="2"> 2</label>
+        <label><input type="radio" name="pleasant_1" value="3"> 3</label>
+        <label><input type="radio" name="pleasant_1" value="4"> 4</label>
+        <label><input type="radio" name="pleasant_1" value="5"> 5</label>
+        <label><input type="radio" name="pleasant_1" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>How enjoyable was the task?</p>
+        <label><input type="radio" name="pleasant_2" value="1"> Not at all</label>
+        <label><input type="radio" name="pleasant_2" value="2"> 2</label>
+        <label><input type="radio" name="pleasant_2" value="3"> 3</label>
+        <label><input type="radio" name="pleasant_2" value="4"> 4</label>
+        <label><input type="radio" name="pleasant_2" value="5"> 5</label>
+        <label><input type="radio" name="pleasant_2" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>How demanding did you feel the task was?</p>
+        <label><input type="radio" name="demand_1" value="1"> Not at all</label>
+        <label><input type="radio" name="demand_1" value="2"> 2</label>
+        <label><input type="radio" name="demand_1" value="3"> 3</label>
+        <label><input type="radio" name="demand_1" value="4"> 4</label>
+        <label><input type="radio" name="demand_1" value="5"> 5</label>
+        <label><input type="radio" name="demand_1" value="6"> Extremely</label>
+      </div>
+
+     <button type="button" class="postNext" data-next="postPage4">Next</button>
+
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="postPage" id="postPage4" style="display:none;">
+
+    <div class="likert-item">
+        <p>How able were you to cope with the demands of the task?</p>
+        <label><input type="radio" name="demand_2" value="1"> Not at all</label>
+        <label><input type="radio" name="demand_2" value="2"> 2</label>
+        <label><input type="radio" name="demand_2" value="3"> 3</label>
+        <label><input type="radio" name="demand_2" value="4"> 4</label>
+        <label><input type="radio" name="demand_2" value="5"> 5</label>
+        <label><input type="radio" name="demand_2" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>To what extent did you feel that you needed to exert yourself to deal with the task?</p>
+        <label><input type="radio" name="effort_1" value="1"> Not at all</label>
+        <label><input type="radio" name="effort_1" value="2"> 2</label>
+        <label><input type="radio" name="effort_1" value="3"> 3</label>
+        <label><input type="radio" name="effort_1" value="4"> 4</label>
+        <label><input type="radio" name="effort_1" value="5"> 5</label>
+        <label><input type="radio" name="effort_1" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>How much effort (mental or physical) did you feel this task required you to expend?</p>
+        <label><input type="radio" name="effort_2" value="1"> Not at all</label>
+        <label><input type="radio" name="effort_2" value="2"> 2</label>
+        <label><input type="radio" name="effort_2" value="3"> 3</label>
+        <label><input type="radio" name="effort_2" value="4"> 4</label>
+        <label><input type="radio" name="effort_2" value="5"> 5</label>
+        <label><input type="radio" name="effort_2" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>To what extent did you feel at risk of failure in this task?</p>
+        <label><input type="radio" name="risk_1" value="1"> Not at all</label>
+        <label><input type="radio" name="risk_1" value="2"> 2</label>
+        <label><input type="radio" name="risk_1" value="3"> 3</label>
+        <label><input type="radio" name="risk_1" value="4"> 4</label>
+        <label><input type="radio" name="risk_1" value="5"> 5</label>
+        <label><input type="radio" name="risk_1" value="6"> Extremely</label>
+      </div>
+
+      <button type="button" class="postNext" data-next="postPage5">Next</button>
+
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="postPage" id="postPage5" style="display:none;">
+     <div class="likert-item">
+        <p>How concerned were you with how you would perform in the task?</p>
+        <label><input type="radio" name="risk_2" value="1"> Not at all</label>
+        <label><input type="radio" name="risk_2" value="2"> 2</label>
+        <label><input type="radio" name="risk_2" value="3"> 3</label>
+        <label><input type="radio" name="risk_2" value="4"> 4</label>
+        <label><input type="radio" name="risk_2" value="5"> 5</label>
+        <label><input type="radio" name="risk_2" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>How meaningful was this task to you?</p>
+        <label><input type="radio" name="meaning_1" value="1"> Not at all</label>
+        <label><input type="radio" name="meaning_1" value="2"> 2</label>
+        <label><input type="radio" name="meaning_1" value="3"> 3</label>
+        <label><input type="radio" name="meaning_1" value="4"> 4</label>
+        <label><input type="radio" name="meaning_1" value="5"> 5</label>
+        <label><input type="radio" name="meaning_1" value="6"> Extremely</label>
+      </div>
+
+      <div class="likert-item">
+        <p>How purposeful was this task?</p>
+        <label><input type="radio" name="meaning_2" value="1"> Not at all</label>
+        <label><input type="radio" name="meaning_2" value="2"> 2</label>
+        <label><input type="radio" name="meaning_2" value="3"> 3</label>
+        <label><input type="radio" name="meaning_2" value="4"> 4</label>
+        <label><input type="radio" name="meaning_2" value="5"> 5</label>
+        <label><input type="radio" name="meaning_2" value="6"> Extremely</label>
+      </div>
+
+
+    <button type="submit" form="postTaskForm" class="box">Submit</button>
+  </div>
+</form>
+</div>
+
 
 <div id="taskUI" style="display:none;">
   <!-- put ALL your existing task elements here:
@@ -100,6 +383,9 @@
             <div id="correctAnswer" class="answer"></div>
             <div id="incorrectAnswer" class="answer"></div>
         </div>
+
+        
+
         
         <div id="feedback" class="feedback"></div>
         <div id="fixationCross" style="display: none; font-size: 35px; text-align: center;">+</div>

@@ -15,9 +15,51 @@ const startPracticeBtn = document.getElementById('startPracticeBtn');
 const taskUI          = document.getElementById('taskUI');
 const instructionsScreen = document.getElementById('instructionsScreen');
 
+const postTaskScreen = document.getElementById('postTaskScreen');
+const postTaskForm   = document.getElementById('postTaskForm');
+
+// Multi-page navigation for post-task form
+document.addEventListener('DOMContentLoaded', () => {
+  const postPages = document.querySelectorAll('.postPage');
+  const postNextButtons = document.querySelectorAll('.postNext');
+
+  postNextButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const currentPage = e.target.closest('.postPage');
+      const nextId = e.target.dataset.next;
+      const nextPage = document.getElementById(nextId);
+
+      if (!currentPage || !nextPage) return;
+
+      // Optionally: simple per-page check for required items on that page only
+      const requiredOnPage = currentPage.querySelectorAll('input[required]');
+      for (const input of requiredOnPage) {
+        const name = input.name;
+        const checked = currentPage.querySelector(`input[name="${name}"]:checked`);
+        if (!checked) {
+          alert('Please answer all questions on this page before continuing.');
+          return;
+        }
+      }
+
+      currentPage.style.display = 'none';
+      nextPage.style.display = 'block';
+    });
+  });
+});
+
+let postTaskResponses = {};
 
 
-
+let effortBeliefs = {
+  bad: null,
+  good: null,
+  help_progress: null,
+  stop_progress: null,
+  goals: null
+};
 
 
 let selectedAllocation = 0;
@@ -40,6 +82,7 @@ const maxRounds = 4;
 let trialCounter = 0;
 let timestamp1 = new Date();
 let timestamp2;
+let endTimestamp = null; 
 let creditsSelf    = 0;
 let creditsCharity = 0;
 let donatedTickets = 0;
@@ -88,33 +131,6 @@ function start() {
 }
 
 
-function showInstructionsScreen() {
-  instructionsScreen.style.display = 'block';
-
-  taskUI.style.display          = 'none';
-  receiverEl.style.display      = 'none';
-  easyEl.style.display          = 'none';
-  difficultEl.style.display     = 'none';
-  mathTaskEl.style.display      = 'none';
-  answersEl.style.display       = 'none';
-  feedbackEl.style.display      = 'none';
-  fixationCrossEl.style.display = 'none';
-
-  startPracticeBtn.onclick = () => {
-    instructionsScreen.style.display = 'none';
-
-    taskUI.style.display        = 'block';
-    receiverEl.style.display    = 'block';
-    easyEl.style.display        = 'block';
-    difficultEl.style.display   = 'block';
-
-    phase = 'practice';
-    buildPracticeTrialList();
-    displayNextTrial();
-  };
-}
-
-
 
 
 function getIntroMessage() {
@@ -125,80 +141,127 @@ function getIntroMessage() {
 
   const cond = getUrlParam('cond');
 
+  // Condition 1: Effort reappraisal
   if (cond === '1') {
-  return `
+    return `
   <!-- PAGE 1 -->
-<div id="page1" class="page">
-  <p>When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations.</p>
+  <div id="page1" class="page">
+    <p>When people work hard on a task, it’s completely normal to feel a mix of emotions and sensations.</p>
 
-  <p>
-    You might notice a sense of <strong>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</strong>
-    These reactions can feel intense, but they’re also <strong>signs that you’re actively moving toward your goal.</strong>
-  </p>
+    <p>
+      You might notice a sense of <strong>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</strong>
+      These reactions can feel intense, but they’re also <strong>signs that you’re actively moving toward your goal.</strong>
+    </p>
 
-  <p>
-    They show that your mind and body are engaged and using their resources to help you perform well.
-  </p>
+    <p>
+      They show that your mind and body are engaged and using their resources to help you perform well.
+    </p>
 
-  <button class="nextBtn" data-next="page2">Next</button>
-</div>
+    <button class="nextBtn" data-next="page2">Next</button>
+  </div>
 
+  <!-- PAGE 2 -->
+  <div id="page2" class="page" style="display:none;">
+    <p>
+      Think of it like the body’s <em>fight-or-flight response</em>: when something matters and requires effort, your system shifts into a more alert, energized state.
+    </p>
 
-<!-- PAGE 2 -->
-<div id="page2" class="page" style="display:none;">
-  <p>
-    Think of it like the body’s <em>fight-or-flight response</em>: when something matters and requires effort, your system shifts into a more alert, energized state.
-  </p>
+    <p>
+      Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.
+    </p>
 
-  <p>
-    Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.
-  </p>
+    <p>
+      Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.
+      People experience these sensations even when they have more than enough ability to succeed.
+    </p>
 
-  <p>
-    Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.
-    People experience these sensations even when they have more than enough ability to succeed.
-  </p>
+    <button class="nextBtn" data-next="page3">Next</button>
+  </div>
 
-  <button class="nextBtn" data-next="page3">Next</button>
-</div>
+  <!-- PAGE 3 -->
+  <div id="page3" class="page" style="display:none;">
+    <p>
+      As you begin the next task, keep in mind that the <strong>feelings that come with effort are there to support you</strong>—they’re part of how your body and mind help you rise to a challenge.
+    </p>
 
-
-<!-- PAGE 3 -->
-<div id="page3" class="page" style="display:none;">
-  <p>
-    As you begin the next task, keep in mind that the <strong>feelings that come with effort are there to support you</strong>—they’re part of how your body and mind help you rise to a challenge.
-  </p>
-
-  <button id="finalNext">Next</button>
-</div>
-`;
+    <button id="finalNext">Next</button>
+  </div>
+    `;
   }
 
-  if (cond === '2') {
-    return "You’ll see number sequences and choose between easy and difficult versions of the task.";
+  // Condition 2: Neutral (no reappraisal, no “effort is bad/good”)
+  else {
+    return `
+  <!-- PAGE 1 -->
+  <div id="page1" class="page">
+    <p>People often have a range of reactions when they work on tasks.</p>
+
+    <p>
+      These reactions can vary from person to person and from task to task.
+    </p>
+
+    <p>
+      What someone experiences during a task can depend on many factors, including the type of task, the environment, and their own habits or preferences.
+    </p>
+
+    <button class="nextBtn" data-next="page2">Next</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div id="page2" class="page" style="display:none;">
+    <p>
+      Everyday tasks can differ in how engaging or routine they feel. Some tasks involve paying closer attention, while others are more automatic.
+    </p>
+
+    <p>
+      There is natural variation in how people approach tasks — some prefer to work quickly, others more slowly. None of these patterns are necessarily better or worse.
+    </p>
+
+    <button class="nextBtn" data-next="page3">Next</button>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div id="page3" class="page" style="display:none;">
+    <p>
+      Continue on to the activity.
+    </p>
+
+    <button id="finalNext">Next</button>
+  </div>
+    `;
   }
 
-  // Default text
-  return "You’ll now complete a short practice version of the task to get familiar with it. After practice, the real trials will begin.";
+  // Default fallback if no cond or unknown cond
+  return `
+    <div class="page">
+      <p>You’ll now complete a short practice version of the task to get familiar with it. After practice, the real trials will begin.</p>
+      <button id="finalNext">Next</button>
+    </div>
+  `;
 }
 
+
+
+
 // Handle clicks on any .nextBtn inside the intro pages
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.nextBtn');
+// Handle clicks on any .nextBtn inside the intro pages
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".postNext");
   if (!btn) return;
 
-  const next = btn.dataset.next;
-  if (!next) return;
+  const nextID = btn.dataset.next;
+  if (!nextID) return;
 
-  // Only hide/show intro pages
-  document.querySelectorAll('#introText .page').forEach(p => {
-    p.style.display = 'none';
-  });
-  const nextPage = document.getElementById(next);
-  if (nextPage) {
-    nextPage.style.display = 'block';
-  }
+  // Hide all post pages
+  document.querySelectorAll("#postTaskScreen .postPage")
+    .forEach(pg => pg.style.display = "none");
+
+  // Show target page
+  const nextPage = document.getElementById(nextID);
+  nextPage.style.display = "block";
 });
+
+
 
 function showIntroScreen() {
   const msg  = getIntroMessage();
@@ -210,28 +273,84 @@ function showIntroScreen() {
   taskUI.style.display             = 'none';
 
   const introNextBtn = document.getElementById('introNextBtn');
+  if (introNextBtn) introNextBtn.style.display = 'none'; // we only use inline buttons
 
-  if (cond === '1') {
-    // Multi-page intro: use the button on page 3 instead
-    if (introNextBtn) introNextBtn.style.display = 'none';
+  // --- NEW: wire page navigation *after* HTML is injected ---
 
-    const finalNextBtn = document.getElementById('finalNext');
-    if (finalNextBtn) {
-      finalNextBtn.onclick = () => {
-        introScreen.style.display = 'none';
-        showInstructionsScreen();
-      };
-    }
-  } else {
-    // Simple intro: use the standard introNextBtn
-    if (introNextBtn) {
-      introNextBtn.style.display = 'inline-block';
-      introNextBtn.onclick = () => {
-        introScreen.style.display = 'none';
-        showInstructionsScreen();
-      };
-    }
+  // Make sure only page1 is visible to start
+  const pages = introScreen.querySelectorAll('.page');
+  pages.forEach(p => p.style.display = 'none');
+  const firstPage = document.getElementById('page1');
+  if (firstPage) firstPage.style.display = 'block';
+
+  // Attach click handlers to each .nextBtn
+  const pageNextButtons = introScreen.querySelectorAll('.nextBtn');
+  pageNextButtons.forEach(btn => {
+    btn.type = 'button';   // make sure it doesn't behave like submit anywhere
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const nextId = btn.dataset.next;
+      if (!nextId) return;
+
+      pages.forEach(p => p.style.display = 'none');
+      const nextPage = document.getElementById(nextId);
+      if (nextPage) nextPage.style.display = 'block';
+    });
+  });
+
+  // Final Next: move on to pre-task survey
+  const finalNextBtn = document.getElementById('finalNext');
+  if (finalNextBtn) {
+    finalNextBtn.type = 'button';
+    finalNextBtn.onclick = (e) => {
+      e.preventDefault();
+      introScreen.style.display = 'none';
+      showEffortSurvey();
+    };
   }
+}
+
+
+const effortSurveyScreen = document.getElementById('effortSurveyScreen');
+const effortSurveyForm   = document.getElementById('effortSurveyForm');
+
+function showEffortSurvey() {
+  effortSurveyScreen.style.display = 'block';
+  instructionsScreen.style.display = 'none';
+  taskUI.style.display             = 'none';
+}
+
+// handle survey submission
+if (effortSurveyForm) {
+  effortSurveyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(effortSurveyForm);
+    effortBeliefs.bad           = formData.get('bad');
+    effortBeliefs.good          = formData.get('good');
+    effortBeliefs.help_progress = formData.get('help_progress');
+    effortBeliefs.stop_progress = formData.get('stop_progress');
+    effortBeliefs.goals         = formData.get('goals');
+
+    console.log('Effort beliefs:', effortBeliefs);
+
+    // hide survey, go to your existing instructions + practice flow
+    effortSurveyScreen.style.display = 'none';
+    showInstructionsScreen();
+  });
+}
+
+function showInstructionsScreen() {
+    instructionsScreen.style.display = 'block';
+    introScreen.style.display = 'none';
+
+    startPracticeBtn.onclick = () => {
+        instructionsScreen.style.display = 'none';
+        taskUI.style.display = 'block';
+
+        buildPracticeTrialList();
+        displayNextTrial();
+    };
 }
 
 
@@ -676,7 +795,7 @@ function checkAnswer(isCorrect) {
 // Converts the data array to CSV format and triggers a download
 function generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, timestamp2) {
 
-  const header = [
+      const header = [
     "participantSID","startTime","finishTime","TrialNumber","uniqueKey",
     "receiver","easy_addition","easy_credits","difficult_addition",
     "difficult_credits","choice","answer","answer_correct","shown_numbers",
@@ -684,17 +803,32 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, timesta
     "answer_time_to_decision","timedOut",
     "credits_self_total","credits_charity_total",
     "actual_donated_tickets","attempted_donation",
-    "self_trial_preference","charity_trial_preference", "allocationPercentage"
+    "self_trial_preference","charity_trial_preference","allocationPercentage",
+    // PRE-TASK effort beliefs
+    "pre_bad","pre_good","pre_help_progress","pre_stop_progress","pre_goals",
+    // POST-TASK items
+    "post_meaning_1","post_meaning_2",
+    "post_risk_1","post_risk_2",
+    "post_effort_1","post_effort_2",
+    "post_demand_1","post_demand_2",
+    "post_pleasant_1","post_pleasant_2",
+    "post_pride","post_encouraged",
+    "post_challenge","post_stressed",
+    "post_frustrated","post_fatigued",
+    "post_bored","post_overwhelmed"
   ];
+
+
   const csvRows = [header];
 
-  for (const item of trialResults) {
+    for (const item of trialResults) {
     csvRows.push([
       participantSID,
       timestamp1,
       timestamp2,
       item.trialNumber,
       participantUniqueKey,
+      item.receiver,
       item.easy_addition,
       item.easy_credits,
       item.difficult_addition,
@@ -708,9 +842,42 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, timesta
       item.time_to_decision,
       item.answer_time_to_decision,
       item.timedOut,
-      creditsSelf
+      creditsSelf,
+      creditsCharity,
+      donatedTickets,
+      attemptedDonation,
+      selfTrialPreference,
+      charityTrialPreference,
+      allocationPercentage,
+      // PRE questionnaire (from effortSurveyForm)
+      effortBeliefs.bad           ?? "",
+      effortBeliefs.good          ?? "",
+      effortBeliefs.help_progress ?? "",
+      effortBeliefs.stop_progress ?? "",
+      effortBeliefs.goals         ?? "",
+      // POST questionnaire (from postTaskForm)
+      postTaskResponses.meaning_1       ?? "",
+      postTaskResponses.meaning_2       ?? "",
+      postTaskResponses.risk_1     ?? "",
+      postTaskResponses.risk_2 ?? "",
+      postTaskResponses.effort_1     ?? "",
+      postTaskResponses.effort_2 ?? "",
+      postTaskResponses.demand_1     ?? "",
+      postTaskResponses.demand_2 ?? "",
+      postTaskResponses.pleasant_1     ?? "",
+      postTaskResponses.pleasant_2 ?? "",
+      postTaskResponses.pride ?? "",
+      postTaskResponses.encouraged ?? "",
+      postTaskResponses.challenge ?? "",
+      postTaskResponses.stressed ?? "",
+      postTaskResponses.frustrated ?? "",
+      postTaskResponses.fatigued ?? "",
+      postTaskResponses.bored ?? "",
+      postTaskResponses.overwhelmed ?? ""
     ]);
   }
+
+
 
   const csvContent = csvRows.map(e => e.join(",")).join("\n");
 
@@ -772,10 +939,65 @@ function generateUniqueKey() {
 }
 const participantUniqueKey = generateUniqueKey();
 
-function endExperiment() {
 
+// handle post-task survey submission
+function showPostTaskScreen() {
+  console.log('showPostTaskScreen called');
+  console.log('postTaskScreen is', postTaskScreen);
+  postTaskScreen.style.display = 'block';
+}
+
+if (postTaskForm) {
+  console.log('postTaskForm found:', postTaskForm);
+
+  postTaskForm.addEventListener('submit', (e) => {
+    console.log('🔥 postTaskForm submit event fired');
+
+    // At this point, ALL required fields must be filled.
+    // If any were missing, this handler would never run.
+
+    e.preventDefault();
+
+    const formData = new FormData(postTaskForm);
+    postTaskResponses = Object.fromEntries(formData.entries());
+    console.log('Post-task responses:', postTaskResponses);
+
+    generateCSV(
+      trialResults,
+      participantUniqueKey,
+      participantSID,
+      timestamp1,
+      endTimestamp
+    );
+
+    const container = document.querySelector('.experiment-container');
+    postTaskScreen.style.display = 'none';
+
+    container.innerHTML = `
+      <div class="content-text" style="text-align:center;">
+        <h2 style="margin-top:0;">Congratulations!</h2>
+        <p style="font-size:1.1rem;">
+          You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
+        </p>
+        <p>Thank you for participating!</p>
+        <button class="box" id="continueBtn">Continue</button>
+      </div>
+    `;
+
+    document.getElementById("continueBtn").onclick = () => {
+      window.location.href = "https://google.com";
+    };
+  });
+} else {
+  console.warn('⚠️ postTaskForm is null when script ran');
+}
+
+
+
+function endExperiment() {
   const container  = document.querySelector('.experiment-container');
 
+  // If we're just finishing practice, go to real task
   if (phase === 'practice') {
     // Hide task UI
     taskUI.style.display = 'none';
@@ -803,28 +1025,17 @@ function endExperiment() {
     return;
   }
 
-  // MAIN TASK END
-  const timestamp2 = new Date();
+  // ── MAIN TASK END ─────────────────────────────
+  endTimestamp = new Date();          // store finish time for CSV
 
-  // Save once here
-  generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, timestamp2);
-
-  container.innerHTML = `
-    <div class="content-text" style="text-align:center;">
-    <h2 style="margin-top:0;">Congratulations!</h2>
-            <p style="font-size:1.1rem;">
-                You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
-            </p>
-      <p>Thank you for participating!</p>
-      <button class="box" id="continueBtn">Continue</button>
-    </div>
-  `;
-
-  document.getElementById("continueBtn").onclick = () => {
-    window.location.href = "https://google.com";   // change to your actual URL
-  };
+  // Hide task UI and show post-task questions
+  taskUI.style.display = 'none';
+  showPostTaskScreen();
 }
 
+
+
+ 
 
 
 
