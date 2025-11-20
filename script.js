@@ -796,7 +796,7 @@ function checkAnswer(isCorrect) {
 function generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, timestamp2) {
 
       const header = [
-    "participantSID","startTime","finishTime","TrialNumber","uniqueKey",
+    "participantSID","cond","startTime","finishTime","TrialNumber","uniqueKey",
     "receiver","easy_addition","easy_credits","difficult_addition",
     "difficult_credits","choice","answer","answer_correct","shown_numbers",
     "incorrect_option","correct_position","time_to_decision",
