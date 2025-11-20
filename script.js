@@ -192,16 +192,13 @@ function getIntroMessage() {
   // Condition 2: Neutral (no reappraisal, no “effort is bad/good”)
   else {
     return `
-  <!-- PAGE 1 -->
+   <!-- PAGE 1 -->
   <div id="page1" class="page">
-    <p>People often have a range of reactions when they work on tasks.</p>
+    <p>When people work hard on a task, people experience a mix of emotions and sensations.</p>
 
     <p>
-      These reactions can vary from person to person and from task to task.
-    </p>
-
-    <p>
-      What someone experiences during a task can depend on many factors, including the type of task, the environment, and their own habits or preferences.
+      You might notice a sense of <strong>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</strong>
+      These reactions can feel intense.
     </p>
 
     <button class="nextBtn" data-next="page2">Next</button>
@@ -210,11 +207,15 @@ function getIntroMessage() {
   <!-- PAGE 2 -->
   <div id="page2" class="page" style="display:none;">
     <p>
-      Everyday tasks can differ in how engaging or routine they feel. Some tasks involve paying closer attention, while others are more automatic.
+      Think of it like the body’s <em>fight-or-flight response</em>: when something requires effort, your system shifts into a more alert, energized state.
     </p>
 
     <p>
-      There is natural variation in how people approach tasks — some prefer to work quickly, others more slowly. None of these patterns are necessarily better or worse.
+      Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom.
+    </p>
+
+    <p>
+      Feelings like stress or pressure often show up alongside effort.
     </p>
 
     <button class="nextBtn" data-next="page3">Next</button>
@@ -223,7 +224,7 @@ function getIntroMessage() {
   <!-- PAGE 3 -->
   <div id="page3" class="page" style="display:none;">
     <p>
-      Continue on to the activity.
+      As you begin the next task, keep in mind that feelings of effort will be present.
     </p>
 
     <button id="finalNext">Next</button>
