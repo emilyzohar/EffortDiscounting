@@ -150,11 +150,11 @@ function getIntroMessage() {
 
     <p>
       You might notice a sense of <strong>challenge, a boost in focus, or moments of frustration, fatigue, stress, or irritation.</strong>
-      These reactions can feel intense, but they’re also <strong>signs that you’re actively moving toward your goal.</strong>
+      These reactions can feel intense, but they’re <strong>positive signs that you’re making progress toward your goal.</strong>
     </p>
 
     <p>
-      They show that your mind and body are engaged and using their resources to help you perform well.
+      They show that your mind and body are engaged and should be taken as a form of encouragement that you’re working toward a meaningful goal.
     </p>
 
     <button class="nextBtn" data-next="page2">Next</button>
@@ -167,11 +167,11 @@ function getIntroMessage() {
     </p>
 
     <p>
-      Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom—a shift into deeper engagement.
+      Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom— to help them progress on the task at hand.
     </p>
 
     <p>
-      Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but because your system is mobilizing energy and focus to support what you’re doing.
+      Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but the opposite: your system is mobilizing energy and focus to aid in your performance.
       People experience these sensations even when they have more than enough ability to succeed.
     </p>
 
@@ -895,7 +895,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, timesta
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      experimentID: "R7hDnmaVe5J0",   // your DataPipe experiment ID
+      experimentID: "Qs3EuJLXFeff",   // your DataPipe experiment ID
       filename: filename,
       data: csvContent                // raw CSV string
     })
