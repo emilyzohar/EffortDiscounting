@@ -794,7 +794,7 @@ function checkAnswer(isCorrect) {
 
 
 // Converts the data array to CSV format and triggers a download
-function generateCSV(trialResults, participantUniqueKey, participantSID, timestamp1, timestamp2) {
+function generateCSV(trialResults, participantUniqueKey, participantSID, cond, timestamp1, timestamp2) {
 
       const header = [
     "participantSID","cond","startTime","finishTime","TrialNumber","uniqueKey",
@@ -895,7 +895,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, timesta
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      experimentID: "R7hDnmaVe5J0",   // your DataPipe experiment ID
+      experimentID: "Qs3EuJLXFeff",   // your DataPipe experiment ID
       filename: filename,
       data: csvContent                // raw CSV string
     })
