@@ -825,6 +825,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, timesta
     for (const item of trialResults) {
     csvRows.push([
       participantSID,
+      cond,
       timestamp1,
       timestamp2,
       item.trialNumber,
