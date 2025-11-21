@@ -968,6 +968,7 @@ if (postTaskForm) {
       trialResults,
       participantUniqueKey,
       participantSID,
+      cond,
       timestamp1,
       endTimestamp
     );
