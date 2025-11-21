@@ -111,6 +111,9 @@ function getUrlParam(name) {
   const params = new URLSearchParams(window.location.search);
   return params.get(name);
 }
+// global condition, available everywhere
+const cond = (getUrlParam('cond') || "").trim();
+
 
 function initParticipant() {
   const sidFromUrl = getUrlParam('sid');  // e.g., ?sid=ABC123 in the URL
