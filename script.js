@@ -1016,7 +1016,7 @@ if (postTaskForm) {
 
     document.getElementById("continueBtn").onclick = () => {
   window.location.href =
-    `https://utscpsych.sona-systems.com/webstudy_credit.aspx?experiment_id=1211&credit_token=ae39b79b546745878b322f6086a16831&survey_code=${participantSID}`;
+    `https://app.prolific.com/submissions/complete?cc=C1I4POTS`;
 };
 
   });
