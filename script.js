@@ -124,6 +124,7 @@ function initParticipant() {
     participantSID = prompt("Please enter your Connect ID:", "");
   }
   console.log("SID:", participantSID);
+  console.log("Prolific ID:", prolific);
 }
 
 let phase = 'practice';   // 'practice' or 'main'
