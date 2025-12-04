@@ -113,6 +113,7 @@ function getUrlParam(name) {
 }
 // global condition, available everywhere
 const cond = (getUrlParam('cond') || "").trim();
+const prolific = (getUrlParam('prolific') || "").trim();
 
 
 function initParticipant() {
@@ -818,10 +819,10 @@ function checkAnswer(isCorrect) {
 
 
 // Converts the data array to CSV format and triggers a download
-function generateCSV(trialResults, participantUniqueKey, participantSID, cond, timestamp1, timestamp2) {
+function generateCSV(trialResults, participantUniqueKey, participantSID, cond, prolific, timestamp1, timestamp2) {
 
       const header = [
-    "participantSID","cond","startTime","finishTime","TrialNumber","uniqueKey",
+    "participantSID","cond", "prolific", "startTime","finishTime","TrialNumber","uniqueKey",
     "receiver","easy_addition","easy_credits","difficult_addition",
     "difficult_credits","choice","answer","answer_correct","shown_numbers",
     "incorrect_option","correct_position","time_to_decision",
@@ -850,6 +851,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, cond, t
     csvRows.push([
       participantSID,
       cond,
+      prolific,
       timestamp1,
       timestamp2,
       item.trialNumber,
@@ -993,6 +995,7 @@ if (postTaskForm) {
       participantUniqueKey,
       participantSID,
       cond,
+      prolific,
       timestamp1,
       endTimestamp
     );
