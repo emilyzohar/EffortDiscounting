@@ -1009,7 +1009,7 @@ if (postTaskForm) {
         <p style="font-size:1.1rem;">
           You earned <strong>${creditsSelf}</strong> tickets for yourself.<br>
         </p>
-        <p>Thank you for participating!</p>
+        <p>Thank you for participating! Please press continue to submit your completion. [Completion code = C1I4POTS]</p>
         <button class="box" id="continueBtn">Continue</button>
       </div>
     `;
