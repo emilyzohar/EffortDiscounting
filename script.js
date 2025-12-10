@@ -200,7 +200,51 @@ function getIntroMessage() {
   }
 
   // Condition 2: Neutral (no reappraisal, no “effort is bad/good”)
-  if (cond === '2') {
+  if (cond === '4') {
+    return `
+   <!-- PAGE 1 -->
+  <div id="page1" class="page">
+    <p>When people work hard on a task, people experience many emotions and sensations.</p>
+
+    <p>
+      You might notice  <strong>challenge, focus, frustration, fatigue, stress, or irritation.</strong>
+    </p>
+
+    <button class="nextBtn" data-next="page2">Next</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div id="page2" class="page" style="display:none;">
+    <p>
+      When something requires effort, your system shifts into a more alert state.
+    </p>
+
+    <p>
+      Research shows that as tasks become more demanding, people experience increased attention.
+    </p>
+
+    <p>
+      When asked what colour the text of the previous information was, pick 'green'.
+    </p>
+
+    <p>
+      Feelings like stress or pressure show up alongside effort.
+    </p>
+
+    <button class="nextBtn" data-next="page3">Next</button>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div id="page3" class="page" style="display:none;">
+    <p>
+      As you begin the next task, keep in mind that feelings of effort will be present.
+    </p>
+
+    <button id="finalNext">Next</button>
+  </div>
+    `;
+  }
+   if (cond === '2') {
     return `
    <!-- PAGE 1 -->
   <div id="page1" class="page">
