@@ -55,6 +55,7 @@ let postTaskResponses = {};
 
 let effortBeliefs = {
   bad: null,
+  AC: null,
   good: null,
   help_progress: null,
   stop_progress: null,
@@ -175,6 +176,10 @@ function getIntroMessage() {
       Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom— to help them progress on the task at hand.
     </p>
 
+     <p>
+      When asked what colour the text of the previous information was, pick 'green'.
+    </p>
+
     <p>
       Feelings like stress or pressure often show up alongside this, not because you’re failing or incapable, but the opposite: your system is mobilizing energy and focus to aid in your performance.
       People experience these sensations even when they have more than enough ability to succeed.
@@ -217,6 +222,10 @@ function getIntroMessage() {
 
     <p>
       Research shows that as tasks become more demanding, people naturally experience increased attention and reduced boredom.
+    </p>
+
+    <p>
+      When asked what colour the text of the previous information was, pick 'green'.
     </p>
 
     <p>
@@ -354,6 +363,7 @@ if (effortSurveyForm) {
 
     const formData = new FormData(effortSurveyForm);
     effortBeliefs.bad           = formData.get('bad');
+    effortBeliefs.AC           = formData.get('AC');
     effortBeliefs.good          = formData.get('good');
     effortBeliefs.help_progress = formData.get('help_progress');
     effortBeliefs.stop_progress = formData.get('stop_progress');
@@ -832,7 +842,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, cond, p
     "actual_donated_tickets","attempted_donation",
     "self_trial_preference","charity_trial_preference","allocationPercentage",
     // PRE-TASK effort beliefs
-    "pre_bad","pre_good","pre_help_progress","pre_stop_progress","pre_goals",
+    "pre_bad","pre_AC","pre_good","pre_help_progress","pre_stop_progress","pre_goals",
     // POST-TASK items
     "post_meaning_1","post_meaning_2",
     "post_risk_1","post_risk_2",
@@ -880,6 +890,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, cond, p
       allocationPercentage,
       // PRE questionnaire (from effortSurveyForm)
       effortBeliefs.bad           ?? "",
+      effortBeliefs.AC           ?? "",
       effortBeliefs.good          ?? "",
       effortBeliefs.help_progress ?? "",
       effortBeliefs.stop_progress ?? "",
