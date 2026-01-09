@@ -204,10 +204,10 @@ function getIntroMessage() {
     return `
    <!-- PAGE 1 -->
   <div id="page1" class="page">
-    <p>When people work hard on a task, people experience many emotions and sensations.</p>
+    <p>When people work hard on a task, they experience emotions and sensations.</p>
 
     <p>
-      You might notice  <strong>challenge, focus, frustration, fatigue, stress, or irritation.</strong>
+      Including  <strong>challenge, focus, frustration, fatigue, stress, or irritation.</strong>
     </p>
 
     <button class="nextBtn" data-next="page2">Next</button>
@@ -216,11 +216,11 @@ function getIntroMessage() {
   <!-- PAGE 2 -->
   <div id="page2" class="page" style="display:none;">
     <p>
-      When something requires effort, your system shifts into a more alert state.
+      When something requires effort, you shift into a more alert state.
     </p>
 
     <p>
-      Research shows that as tasks become more demanding, people experience increased attention.
+      As tasks become more demanding, it increases attention.
     </p>
 
     <p>
@@ -228,7 +228,7 @@ function getIntroMessage() {
     </p>
 
     <p>
-      Feelings like stress or pressure show up alongside effort.
+      Stress or pressure show up alongside effort.
     </p>
 
     <button class="nextBtn" data-next="page3">Next</button>
@@ -282,7 +282,7 @@ function getIntroMessage() {
   <!-- PAGE 3 -->
   <div id="page3" class="page" style="display:none;">
     <p>
-      As you begin the next task, keep in mind that feelings of effort will be present.
+      As you begin the next task, keep in mind that effort will be present.
     </p>
 
     <button id="finalNext">Next</button>
