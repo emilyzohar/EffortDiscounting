@@ -177,7 +177,7 @@ function getIntroMessage() {
     </p>
 
      <p>
-      When asked what colour the text of the previous information was, pick 'green'.
+      When asked what colour you were asked to remember, pick <b>'green'</b>.
     </p>
 
     <p>
@@ -224,7 +224,7 @@ function getIntroMessage() {
     </p>
 
     <p>
-      When asked what colour the text of the previous information was, pick 'green'.
+      When asked what colour you were asked to remember, pick <b>'green'</b>.
     </p>
 
     <p>
@@ -269,7 +269,7 @@ function getIntroMessage() {
     </p>
 
     <p>
-      When asked what colour the text of the previous information was, pick 'green'.
+      When asked what colour you were asked to remember, pick <b>'green'</b>.
     </p>
 
     <p>
@@ -290,30 +290,15 @@ function getIntroMessage() {
     `;
   }
   else {
+
      return `
       <!-- PAGE 1 -->
   <div id="page1" class="page">
-    <p>You’ll now complete a short practice version of the task to get familiar with it.</p>
-
-    <button class="nextBtn" data-next="page2">Next</button>
-  </div>
-
-  <!-- PAGE 2 -->
-  <div id="page2" class="page" style="display:none;">
     <p>
-     After practice, the real trials will begin.
+     There seems to be a problem. Please contact the researcher for your credit (emily.zohar@mail.utoronto.ca)
     </p>
 
     <button class="nextBtn" data-next="page3">Next</button>
-  </div>
-
-  <!-- PAGE 3 -->
-  <div id="page3" class="page" style="display:none;">
-    <p>
-      Continue on to the next page to begin.
-    </p>
-
-    <button id="finalNext">Next</button>
   </div>
    `;
   }
