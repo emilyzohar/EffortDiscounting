@@ -145,7 +145,7 @@ function getIntroMessage() {
     return decodeURIComponent(msgFromUrl);
   }
 
-  const cond = getUrlParam('cond');
+  const cond = getUrlParam('cond'); 
 
   // Condition 1: Effort reappraisal
   if (cond === '1') {
