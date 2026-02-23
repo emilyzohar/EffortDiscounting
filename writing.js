@@ -59,7 +59,8 @@ let effortBeliefs = {
   good: null,
   help_progress: null,
   stop_progress: null,
-  goals: null
+  goals: null,
+  abandon: null
 };
 
 
@@ -249,6 +250,7 @@ if (effortSurveyForm) {
     effortBeliefs.help_progress = formData.get('help_progress');
     effortBeliefs.stop_progress = formData.get('stop_progress');
     effortBeliefs.goals         = formData.get('goals');
+    effortBeliefs.abandon         = formData.get('abandon');
 
     console.log('Effort beliefs:', effortBeliefs);
 
@@ -723,7 +725,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, cond, p
     "actual_donated_tickets","attempted_donation",
     "self_trial_preference","charity_trial_preference","allocationPercentage",
     // PRE-TASK effort beliefs
-    "pre_bad","pre_AC","pre_good","pre_help_progress","pre_stop_progress","pre_goals",
+    "pre_bad","pre_AC","pre_good","pre_help_progress","pre_stop_progress","pre_goals","pre_abandon",
     // POST-TASK items
     "post_meaning_1","post_meaning_2",
     "post_risk_1","post_risk_2",
@@ -776,7 +778,7 @@ function generateCSV(trialResults, participantUniqueKey, participantSID, cond, p
       effortBeliefs.help_progress ?? "",
       effortBeliefs.stop_progress ?? "",
       effortBeliefs.goals         ?? "",
-      // POST questionnaire (from postTaskForm)
+      effortBeliefs.abandon       ?? "",
       postTaskResponses.meaning_1       ?? "",
       postTaskResponses.meaning_2       ?? "",
       postTaskResponses.risk_1     ?? "",
