@@ -911,7 +911,7 @@ if (postTaskForm) {
 
     document.getElementById("continueBtn").onclick = () => {
   window.location.href =
-    `https://utscpsych.sona-systems.com/webstudy_credit.aspx?experiment_id=1211&credit_token=ae39b79b546745878b322f6086a16831&survey_code=${participantSID}`;
+    `https://utscpsych.sona-systems.com/webstudy_credit.aspx?experiment_id=1255&credit_token=8ecc24a9862142b2a2eb0a2fd940f9e2&survey_code=${e://Field/id}${participantSID}`;
 };
 
   });
